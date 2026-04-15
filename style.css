@@ -24,7 +24,7 @@
 }
 
 /* ── Light Theme ────────────────────────────────────────────────── */
-[data-theme="light"] {
+html[data-theme="light"] {
   --bg:           #f7f7f8;
   --surface:      #efeff1;
   --surface-2:    #e4e4e8;
@@ -37,11 +37,11 @@
   --text-dim:     #71717a;
 }
 
-[data-theme="light"] #navbar {
+html[data-theme="light"] #navbar {
   background: rgba(247, 247, 248, 0.85);
 }
 
-[data-theme="light"] .hero-img {
+html[data-theme="light"] .hero-img {
   box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px rgba(220, 38, 38, 0.22);
 }
 
@@ -57,6 +57,7 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s, color 0.25s;
 }
 
 a {
@@ -83,7 +84,7 @@ a:hover { color: var(--accent-hover); }
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, background 0.25s;
 }
 
 #navbar.scrolled {
@@ -230,38 +231,52 @@ section {
 }
 
 .hero-content {
-  padding-top: calc(var(--nav-h) + 40px);
+  padding-top: calc(var(--nav-h) + 48px);
   padding-bottom: 80px;
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-main {
+  display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 60px;
+  gap: 48px;
 }
 
 .hero-text {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
   flex: 1;
   min-width: 0;
 }
 
 .hero-photo {
   flex-shrink: 0;
+  padding-top: 2px;
 }
 
 .hero-img {
-  width: 240px;
-  height: 240px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 50%;
   display: block;
-  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px rgba(220, 38, 38, 0.35);
-  transition: box-shadow 0.3s;
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 5px rgba(220, 38, 38, 0.45),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.3s, transform 0.3s;
 }
 .hero-img:hover {
-  box-shadow: 0 0 0 3px var(--bg), 0 0 0 8px rgba(220, 38, 38, 0.5);
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 7px rgba(220, 38, 38, 0.65),
+    0 12px 40px rgba(0, 0, 0, 0.45);
+  transform: scale(1.03);
 }
 
 .hero-label {
@@ -987,13 +1002,16 @@ footer#contact {
     gap: 2px;
   }
 
-  .hero-content {
-    flex-direction: column;
-    gap: 32px;
+  .hero-main {
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+  .hero-photo {
+    padding-top: 0;
   }
   .hero-img {
-    width: 110px;
-    height: 110px;
+    width: 88px;
+    height: 88px;
   }
 
   .hobby-cards {
