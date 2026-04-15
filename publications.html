@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Publications and conference presentations by Nikos Malakasis.">
   <title>Publications — Nikos Malakasis</title>
@@ -20,8 +21,10 @@
         <li><a href="experience.html">Experience</a></li>
         <li><a href="publications.html" class="nav-active">Publications</a></li>
         <li><a href="projects.html">Projects</a></li>
+        <li><a href="hobbies.html">Hobbies</a></li>
         <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">☀</button>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
       </button>

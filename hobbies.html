@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Projects by Nikos Malakasis.">
-  <title>Projects — Nikos Malakasis</title>
+  <meta name="description" content="Hobbies of Nikos Malakasis — AI art, manga, and One Piece TCG.">
+  <title>Hobbies — Nikos Malakasis</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,8 +20,8 @@
         <li><a href="about.html">About</a></li>
         <li><a href="experience.html">Experience</a></li>
         <li><a href="publications.html">Publications</a></li>
-        <li><a href="projects.html" class="nav-active">Projects</a></li>
-        <li><a href="hobbies.html">Hobbies</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="hobbies.html" class="nav-active">Hobbies</a></li>
         <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
       <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">☀</button>
@@ -36,28 +36,62 @@
     <section class="page-hero">
       <div class="container">
         <a href="index.html" class="back-link">&larr; Home</a>
-        <span class="hero-label">Projects</span>
-        <h1 class="page-title">Things I've Built</h1>
-        <p class="page-desc">Personal and research projects — coming soon.</p>
+        <span class="hero-label">Hobbies</span>
+        <h1 class="page-title">Outside the Lab</h1>
+        <p class="page-desc">Art, stories, and cards.</p>
       </div>
     </section>
 
-    <section>
+    <!-- AI Art Gallery -->
+    <section id="ai-art">
       <div class="container">
-        <div class="projects-grid projects-grid-large">
-          <div class="project-card placeholder">
-            <div class="project-icon">&#9671;</div>
-            <div class="project-label">Coming soon</div>
+        <h2 class="section-title">AI Art Gallery</h2>
+        <p class="section-sub">Generative art I've created over time using various AI tools.</p>
+        <div class="gallery-grid" id="gallery-grid">
+          <!-- Add images here as:
+          <div class="gallery-item">
+            <img src="art/filename.jpg" alt="Description">
           </div>
-          <div class="project-card placeholder">
-            <div class="project-icon">&#9671;</div>
-            <div class="project-label">Coming soon</div>
+          -->
+          <p class="hobby-empty">First pieces coming soon.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI One Piece Manga -->
+    <section id="manga" class="surface-section">
+      <div class="container">
+        <h2 class="section-title">AI One Piece Manga</h2>
+        <p class="section-sub">An ongoing manga project — chapters generated with AI.</p>
+        <div class="chapters-grid" id="chapters-grid">
+          <!-- Add chapters here as:
+          <div class="chapter-card">
+            <img src="manga/ch01-cover.jpg" alt="Chapter 1">
+            <span>Chapter 1</span>
           </div>
-          <div class="project-card placeholder">
+          -->
+          <div class="chapter-card">
             <div class="project-icon">&#9671;</div>
-            <div class="project-label">Coming soon</div>
+            <div class="project-label">Chapter 1 — Soon</div>
+          </div>
+          <div class="chapter-card">
+            <div class="project-icon">&#9671;</div>
+            <div class="project-label">Chapter 2 — Soon</div>
+          </div>
+          <div class="chapter-card">
+            <div class="project-icon">&#9671;</div>
+            <div class="project-label">Chapter 3 — Soon</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- One Piece TCG -->
+    <section id="tcg">
+      <div class="container">
+        <h2 class="section-title">One Piece TCG</h2>
+        <p class="section-sub">Decks, collections, and card game content.</p>
+        <p class="tcg-placeholder">Content coming soon — decks, highlights, and more.</p>
       </div>
     </section>
 

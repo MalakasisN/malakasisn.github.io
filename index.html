@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Nikos Malakasis — PhD Candidate in Computational Neuroscience at TU Munich.">
   <title>Nikos Malakasis</title>
@@ -20,8 +21,10 @@
         <li><a href="experience.html">Experience</a></li>
         <li><a href="publications.html">Publications</a></li>
         <li><a href="projects.html">Projects</a></li>
+        <li><a href="hobbies.html">Hobbies</a></li>
         <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">☀</button>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
       </button>
@@ -35,16 +38,21 @@
       <div class="hero-glow"></div>
       <div class="container">
         <div class="hero-content">
-          <span class="hero-label">PhD Candidate &middot; Computational Neuroscience &middot; TU Munich</span>
-          <h1 class="hero-name">Nikos<br>Malakasis</h1>
-          <p class="hero-bio">
-            I build computational models of neural circuits to understand how the brain
-            organises its connections. Based in Munich, originally from Greece.
-          </p>
-          <div class="hero-actions">
-            <a href="mailto:malakasisnikos@gmail.com" class="btn btn-primary">Get in touch</a>
-            <a href="https://github.com/MalakasisN" class="btn btn-secondary" target="_blank" rel="noopener">GitHub</a>
-            <a href="Nikos_Malakasis_CV.pdf" class="btn btn-secondary" target="_blank" rel="noopener">CV</a>
+          <div class="hero-text">
+            <span class="hero-label">PhD Candidate &middot; Computational Neuroscience &middot; TU Munich</span>
+            <h1 class="hero-name">Nikos<br>Malakasis</h1>
+            <p class="hero-bio">
+              I build computational models of neural circuits, analyze data, play around with LLMs
+              and sometimes sling cards. Based in Munich, originally from Greece.
+            </p>
+            <div class="hero-actions">
+              <a href="mailto:malakasisnikos@gmail.com" class="btn btn-primary">Get in touch</a>
+              <a href="https://github.com/MalakasisN" class="btn btn-secondary" target="_blank" rel="noopener">GitHub</a>
+              <a href="Nikos_Malakasis_CV.pdf" class="btn btn-secondary" target="_blank" rel="noopener">CV</a>
+            </div>
+          </div>
+          <div class="hero-photo">
+            <img src="me.jpeg" alt="Nikos Malakasis" class="hero-img">
           </div>
         </div>
       </div>
@@ -150,6 +158,33 @@
             <div class="project-icon">&#9671;</div>
             <div class="project-label">Coming soon</div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hobbies preview -->
+    <section id="hobbies-preview">
+      <div class="container">
+        <div class="preview-header">
+          <h2 class="section-title">Hobbies</h2>
+          <a href="hobbies.html" class="view-all">Explore &rarr;</a>
+        </div>
+        <div class="hobby-cards">
+          <a href="hobbies.html#ai-art" class="hobby-card">
+            <span class="hobby-card-icon">◈</span>
+            <span class="hobby-card-title">AI Art Gallery</span>
+            <span class="hobby-card-desc">Generative art explorations over time.</span>
+          </a>
+          <a href="hobbies.html#manga" class="hobby-card">
+            <span class="hobby-card-icon">◈</span>
+            <span class="hobby-card-title">AI One Piece Manga</span>
+            <span class="hobby-card-desc">An ongoing AI-generated manga project.</span>
+          </a>
+          <a href="hobbies.html#tcg" class="hobby-card">
+            <span class="hobby-card-icon">◈</span>
+            <span class="hobby-card-title">One Piece TCG</span>
+            <span class="hobby-card-desc">Decks, collections &amp; card game content.</span>
+          </a>
         </div>
       </div>
     </section>
