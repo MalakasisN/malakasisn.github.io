@@ -283,7 +283,6 @@ section {
 }
 
 /* ── Experience ─────────────────────────────────────────────────── */
-#experience { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
 .timeline {
   display: flex;
@@ -395,7 +394,6 @@ section {
 }
 
 /* ── Publications ───────────────────────────────────────────────── */
-#publications { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
 .pub-list {
   list-style: none;
@@ -487,7 +485,6 @@ section {
 }
 
 /* ── Skills ─────────────────────────────────────────────────────── */
-#skills { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
 .skills-grid {
   display: flex;
@@ -575,6 +572,215 @@ footer#contact {
   color: var(--text-dim);
 }
 
+/* ── Surface section (shared bg variant) ───────────────────────── */
+.surface-section {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Nav active state ───────────────────────────────────────────── */
+.nav-links a.nav-active {
+  color: var(--text);
+}
+
+/* ── Preview sections (index.html) ─────────────────────────────── */
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+}
+.preview-header .section-title {
+  margin-bottom: 0;
+}
+
+.view-all {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.view-all:hover { color: var(--accent); }
+
+.preview-text {
+  font-size: 0.975rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 640px;
+  margin-bottom: 24px;
+}
+
+.preview-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Experience preview */
+.exp-preview-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.exp-preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+.exp-preview-item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.exp-preview-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.exp-preview-role {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.exp-preview-org {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+}
+
+.exp-preview-date {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Publications preview */
+.pub-preview-list {
+  list-style: none;
+}
+
+.pub-preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 28px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+.pub-preview-item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.pub-preview-title {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.pub-preview-venue {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Page hero (subpages) ───────────────────────────────────────── */
+.page-hero {
+  padding: calc(var(--nav-h) + 60px) 0 60px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-title {
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1.1;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.page-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Education note ─────────────────────────────────────────────── */
+.edu-note {
+  margin-top: 20px;
+  font-size: 0.84rem;
+  color: var(--text-dim);
+}
+
+/* ── Conference list ────────────────────────────────────────────── */
+.conf-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.conf-item {
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+}
+.conf-item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.conf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 5px;
+}
+
+.conf-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.conf-year {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.conf-venue {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+}
+
+/* ── Projects large grid (projects page) ───────────────────────── */
+.projects-grid-large {
+  grid-template-columns: repeat(3, 1fr);
+}
+.projects-grid-large .project-card.placeholder {
+  min-height: 200px;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 680px) {
   section { padding: 72px 0; }
@@ -603,6 +809,26 @@ footer#contact {
   .timeline-header {
     flex-direction: column;
     gap: 2px;
+  }
+
+  .exp-preview-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .pub-preview-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .conf-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .projects-grid-large {
+    grid-template-columns: 1fr;
   }
 
   .footer-top {

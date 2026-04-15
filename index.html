@@ -12,15 +12,14 @@
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav id="navbar">
     <div class="nav-container">
-      <a href="#hero" class="nav-logo">NM</a>
+      <a href="index.html" class="nav-logo">NM</a>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="#projects">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="projects.html">Projects</a></li>
         <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
@@ -51,134 +50,93 @@
       </div>
     </section>
 
-    <!-- About -->
-    <section id="about">
+    <!-- About preview -->
+    <section id="about-preview">
       <div class="container">
-        <h2 class="section-title">About</h2>
-        <div class="about-content">
-          <p>
-            I'm a PhD candidate at the
-            <a href="https://www.gjorgjievalab.org/" target="_blank" rel="noopener">Computation in Neural Circuits Lab</a>
-            at TU Munich, led by Prof. Dr. Julijana Gjorgjieva. My research focuses on how inhibitory
-            and excitatory synaptic plasticity shape the subcellular organisation of synapses on dendrites —
-            the branching structures through which neurons receive and integrate signals.
-          </p>
-          <p>
-            Beyond research, I supervise master's and bachelor's theses, teach classes, and contribute to
-            grant writing. I hold an MSc in Bioinformatics from the University of Crete and a BSc in Biology
-            from the National and Kapodistrian University of Athens.
-          </p>
+        <div class="preview-header">
+          <h2 class="section-title">About</h2>
+          <a href="about.html" class="view-all">More about me &rarr;</a>
+        </div>
+        <p class="preview-text">
+          PhD candidate at the Computation in Neural Circuits Lab at TU Munich, studying how
+          inhibitory and excitatory plasticity shape dendritic synaptic organisation. I supervise
+          student projects, teach, and contribute to grant writing alongside my research.
+        </p>
+        <div class="preview-tags">
+          <span class="tag">Computational Modelling</span>
+          <span class="tag">Spiking Neural Networks</span>
+          <span class="tag">Python</span>
+          <span class="tag">C++</span>
+          <span class="tag">Machine Learning</span>
         </div>
       </div>
     </section>
 
-    <!-- Experience -->
-    <section id="experience">
+    <!-- Experience preview -->
+    <section id="experience-preview" class="surface-section">
       <div class="container">
-        <h2 class="section-title">Experience</h2>
-        <div class="timeline">
-
-          <div class="timeline-item">
-            <div class="timeline-header">
-              <div>
-                <h3>Doctoral Candidate</h3>
-                <span class="timeline-org">Computation in Neural Circuits Lab &middot; TU Munich</span>
-              </div>
-              <span class="timeline-date">Oct 2022 &ndash; Present</span>
-            </div>
-            <ul class="timeline-bullets">
-              <li>Research on how inhibitory and excitatory plasticity shape dendritic synaptic organisation.</li>
-              <li>Supervised four master's students and one bachelor's student on research projects.</li>
-              <li>Presented at Bernstein 2023, Cosyne 2024, Dendrites 2024, and the Gordon Research Conference 2025; teaches classes and assists with grant writing.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-header">
-              <div>
-                <h3>Research Assistant &amp; Master's Student</h3>
-                <span class="timeline-org">Dendrites Lab &middot; FORTH, Crete</span>
-              </div>
-              <span class="timeline-date">Jul 2020 &ndash; Sep 2022</span>
-            </div>
-            <ul class="timeline-bullets">
-              <li>Built a bio-realistic Spiking Neural Network in C++ to study how structural plasticity affects image classification.</li>
-              <li>Designed simplified interneuron models with active dendrites using Brian2.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-header">
-              <div>
-                <h3>Bachelor's Student</h3>
-                <span class="timeline-org">Molecular Genetics of Aging Lab &middot; Academy of Athens (BRFAA)</span>
-              </div>
-              <span class="timeline-date">Jul 2018 &ndash; Jul 2019</span>
-            </div>
-            <ul class="timeline-bullets">
-              <li>Investigated interactions between the p38 MAPK pathway and the mRNA decapping complex in <em>C. elegans</em>.</li>
-            </ul>
-          </div>
-
+        <div class="preview-header">
+          <h2 class="section-title">Experience</h2>
+          <a href="experience.html" class="view-all">Full history &rarr;</a>
         </div>
-      </div>
-    </section>
-
-    <!-- Education -->
-    <section id="education">
-      <div class="container">
-        <h2 class="section-title">Education</h2>
-        <div class="edu-grid">
-          <div class="edu-card">
-            <div class="edu-degree">Ph.D., Computational Neuroscience</div>
-            <div class="edu-institution">Technical University of Munich</div>
-            <div class="edu-year">Ongoing &middot; Munich, Germany</div>
+        <div class="exp-preview-list">
+          <div class="exp-preview-item">
+            <div class="exp-preview-left">
+              <span class="exp-preview-role">Doctoral Candidate</span>
+              <span class="exp-preview-org">Computation in Neural Circuits Lab &middot; TU Munich</span>
+            </div>
+            <span class="exp-preview-date">Oct 2022 &ndash; Present</span>
           </div>
-          <div class="edu-card">
-            <div class="edu-degree">MSc, Bioinformatics</div>
-            <div class="edu-institution">University of Crete</div>
-            <div class="edu-year">Dec 2021 &middot; Crete, Greece</div>
-            <div class="edu-grade">9.4 / 10 &mdash; Excellent</div>
+          <div class="exp-preview-item">
+            <div class="exp-preview-left">
+              <span class="exp-preview-role">Research Assistant &amp; Master's Student</span>
+              <span class="exp-preview-org">Dendrites Lab &middot; FORTH, Crete</span>
+            </div>
+            <span class="exp-preview-date">Jul 2020 &ndash; Sep 2022</span>
           </div>
-          <div class="edu-card">
-            <div class="edu-degree">BSc, Biology</div>
-            <div class="edu-institution">National &amp; Kapodistrian University of Athens</div>
-            <div class="edu-year">Sep 2019 &middot; Athens, Greece</div>
-            <div class="edu-grade">7.25 / 10 &mdash; Very Good</div>
+          <div class="exp-preview-item">
+            <div class="exp-preview-left">
+              <span class="exp-preview-role">Bachelor's Student</span>
+              <span class="exp-preview-org">Molecular Genetics of Aging Lab &middot; BRFAA Athens</span>
+            </div>
+            <span class="exp-preview-date">Jul 2018 &ndash; Jul 2019</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Publications -->
-    <section id="publications">
+    <!-- Publications preview -->
+    <section id="publications-preview">
       <div class="container">
-        <h2 class="section-title">Publications</h2>
-        <ol class="pub-list">
-          <li class="pub-item">
-            <p class="pub-title">Visual experience exerts an instructive role on cortical feedback inputs to the primary visual cortex</p>
-            <p class="pub-authors">R. Rajan, R. F. Dias, <strong>N. Malakasis</strong>, M. Baeta, X. Zhang, J. Gjorgjieva, L. Petreanu</p>
-            <p class="pub-venue">Current Biology, 2026 &middot; <a href="https://doi.org/10.1016/j.cub.2026.01.031" target="_blank" rel="noopener">doi:10.1016/j.cub.2026.01.031</a></p>
+        <div class="preview-header">
+          <h2 class="section-title">Publications</h2>
+          <a href="publications.html" class="view-all">View all &rarr;</a>
+        </div>
+        <ul class="pub-preview-list">
+          <li class="pub-preview-item">
+            <span class="pub-preview-title">Visual experience exerts an instructive role on cortical feedback inputs to the primary visual cortex</span>
+            <span class="pub-preview-venue">Current Biology, 2026</span>
           </li>
-          <li class="pub-item">
-            <p class="pub-title">Synaptic density and relative connectivity conservation maintain circuit stability across development</p>
-            <p class="pub-authors">I. Fritz, F. Wang, R. Chirif, <strong>N. Malakasis</strong>, J. Gjorgjieva, A. Ferreira Castro</p>
-            <p class="pub-venue">eLife, 2025 &middot; <a href="https://doi.org/10.7554/eLife.108643.1" target="_blank" rel="noopener">doi:10.7554/eLife.108643.1</a></p>
+          <li class="pub-preview-item">
+            <span class="pub-preview-title">Synaptic density and relative connectivity conservation maintain circuit stability across development</span>
+            <span class="pub-preview-venue">eLife, 2025</span>
           </li>
-          <li class="pub-item">
-            <p class="pub-title">Synaptic turnover promotes efficient learning in bio-realistic spiking neural networks</p>
-            <p class="pub-authors"><strong>N. Malakasis</strong>, S. Chavlis, P. Poirazi</p>
-            <p class="pub-venue">IEEE Asilomar, 2023 &middot; <a href="https://doi.org/10.1109/IEEECONF59524.2023.10476829" target="_blank" rel="noopener">doi:10.1109/IEEECONF59524.2023.10476829</a></p>
+          <li class="pub-preview-item">
+            <span class="pub-preview-title">Synaptic turnover promotes efficient learning in bio-realistic spiking neural networks</span>
+            <span class="pub-preview-venue">IEEE Asilomar, 2023</span>
           </li>
-        </ol>
+        </ul>
       </div>
     </section>
 
-    <!-- Projects -->
-    <section id="projects">
+    <!-- Projects preview -->
+    <section id="projects-preview" class="surface-section">
       <div class="container">
-        <h2 class="section-title">Projects</h2>
-        <p class="section-sub">Personal and research projects — coming soon.</p>
+        <div class="preview-header">
+          <h2 class="section-title">Projects</h2>
+          <a href="projects.html" class="view-all">View projects &rarr;</a>
+        </div>
+        <p class="section-sub">Personal and research projects &mdash; coming soon.</p>
         <div class="projects-grid">
           <div class="project-card placeholder">
             <div class="project-icon">&#9671;</div>
@@ -196,49 +154,8 @@
       </div>
     </section>
 
-    <!-- Skills -->
-    <section id="skills">
-      <div class="container">
-        <h2 class="section-title">Skills</h2>
-        <div class="skills-grid">
-          <div class="skill-group">
-            <h4 class="skill-group-label">Technical</h4>
-            <div class="skill-tags">
-              <span class="tag">Python</span>
-              <span class="tag">C++</span>
-              <span class="tag">Computational Modelling</span>
-              <span class="tag">Data Analysis</span>
-              <span class="tag">Data Visualisation</span>
-              <span class="tag">Machine Learning</span>
-              <span class="tag">Deep Learning</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <h4 class="skill-group-label">Research</h4>
-            <div class="skill-tags">
-              <span class="tag">Spiking Neural Networks</span>
-              <span class="tag">Synaptic Plasticity</span>
-              <span class="tag">Dendritic Computation</span>
-              <span class="tag">Scientific Writing</span>
-              <span class="tag">Student Supervision</span>
-            </div>
-          </div>
-          <div class="skill-group">
-            <h4 class="skill-group-label">Laboratory</h4>
-            <div class="skill-tags">
-              <span class="tag">Molecular Biology</span>
-              <span class="tag">Confocal Microscopy</span>
-              <span class="tag">Bacterial Cloning</span>
-              <span class="tag"><em>C. elegans</em> Handling</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Footer / Contact -->
   <footer id="contact">
     <div class="container">
       <div class="footer-top">
