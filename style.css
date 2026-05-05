@@ -940,7 +940,6 @@ footer#contact {
   aspect-ratio: 2/3;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  border-style: dashed;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -948,10 +947,34 @@ footer#contact {
   gap: 8px;
   padding: 20px;
   transition: border-color 0.2s, background 0.2s;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  position: relative;
+}
+.chapter-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.chapter-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 .chapter-card:hover {
   border-color: var(--accent);
-  background: var(--surface);
 }
 .chapter-card .project-icon {
   font-size: 1.2rem;
