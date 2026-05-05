@@ -936,7 +936,7 @@ footer#contact {
 /* ── Chapter grid (hobbies page) ────────────────────────────────── */
 .chapters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, 180px);
   gap: 14px;
 }
 
