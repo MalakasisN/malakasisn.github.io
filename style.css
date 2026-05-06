@@ -1039,7 +1039,7 @@ footer#contact {
 .tcg-post-photos a { display: block; }
 .tcg-post-photos img {
   width: 100%;
-  height: 150px;
+  height: 100px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid var(--border);
