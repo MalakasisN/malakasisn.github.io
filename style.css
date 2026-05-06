@@ -913,18 +913,33 @@ footer#contact {
   gap: 14px;
 }
 
+.gallery-item {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+.gallery-item:hover { border-color: var(--accent); }
 .gallery-item img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
   display: block;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: transform 0.2s;
 }
-.gallery-item img:hover {
-  border-color: var(--accent);
-  transform: scale(1.02);
+.gallery-item:hover img { transform: scale(1.03); }
+.gallery-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
 }
 
 .hobby-empty {
@@ -984,8 +999,61 @@ footer#contact {
   font-size: 1.2rem;
 }
 
-/* ── TCG section ────────────────────────────────────────────────── */
-.tcg-placeholder {
+/* ── TCG Blog ───────────────────────────────────────────────────── */
+.tcg-blog {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.tcg-post {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  background: var(--surface);
+}
+.tcg-post-date {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tcg-post-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 6px 0 10px;
+  color: var(--text);
+}
+.tcg-post-body {
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.tcg-post-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.tcg-post-photos a { display: block; }
+.tcg-post-photos img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: block;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.tcg-post-photos img:hover {
+  border-color: var(--accent);
+  transform: scale(1.02);
+}
+.tcg-blog-footer {
+  margin-top: 12px;
+}
+.tcg-empty {
   padding: 48px 0;
   font-size: 0.875rem;
   color: var(--text-dim);
@@ -1073,4 +1141,5 @@ footer#contact {
 
 @media (max-width: 480px) {
   .edu-grid { grid-template-columns: 1fr; }
+  .chapters-grid { grid-template-columns: repeat(2, 1fr); }
 }

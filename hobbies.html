@@ -48,12 +48,30 @@
         <h2 class="section-title">AI Art Gallery</h2>
         <p class="section-sub">Generative art I've created over time using various AI tools.</p>
         <div class="gallery-grid" id="gallery-grid">
-          <!-- Add images here as:
           <div class="gallery-item">
-            <img src="art/filename.jpg" alt="Description">
+            <img src="Hobbies/AI Art Gallery/Dementia.jpg" alt="Dementia">
+            <span class="gallery-label">Dementia</span>
           </div>
-          -->
-          <p class="hobby-empty">First pieces coming soon.</p>
+          <div class="gallery-item">
+            <img src="Hobbies/AI Art Gallery/Oni Family.jpg" alt="Oni Family">
+            <span class="gallery-label">Oni Family</span>
+          </div>
+          <div class="gallery-item">
+            <img src="Hobbies/AI Art Gallery/Freedom.jpeg" alt="Freedom">
+            <span class="gallery-label">Freedom</span>
+          </div>
+          <div class="gallery-item">
+            <img src="Hobbies/AI Art Gallery/Alien.jpg" alt="Alien">
+            <span class="gallery-label">Alien</span>
+          </div>
+          <div class="gallery-item">
+            <img src="Hobbies/AI Art Gallery/Gommage.jpeg" alt="Gommage">
+            <span class="gallery-label">Gommage</span>
+          </div>
+          <div class="gallery-item">
+            <img src="Hobbies/AI Art Gallery/Reflexion.jpg" alt="Reflexion">
+            <span class="gallery-label">Reflexion</span>
+          </div>
         </div>
       </div>
     </section>
@@ -81,8 +99,11 @@
     <section id="tcg">
       <div class="container">
         <h2 class="section-title">One Piece TCG</h2>
-        <p class="section-sub">Decks, collections, and card game content.</p>
-        <p class="tcg-placeholder">Content coming soon — decks, highlights, and more.</p>
+        <p class="section-sub">Trips, tournaments, and card game updates.</p>
+        <div class="tcg-blog" id="tcg-preview"></div>
+        <div class="tcg-blog-footer">
+          <a href="tcg-blog.html" class="btn btn-secondary">All posts &rarr;</a>
+        </div>
       </div>
     </section>
 
@@ -106,5 +127,30 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="tcg-posts.js"></script>
+  <script>
+    (function () {
+      var container = document.getElementById('tcg-preview');
+      var posts = (window.TCG_POSTS || []).slice(0, 3);
+      if (!posts.length) {
+        container.innerHTML = '<p class="tcg-empty">No posts yet — check back soon.</p>';
+        return;
+      }
+      container.innerHTML = posts.map(renderPost).join('');
+    }());
+
+    function renderPost(p) {
+      var date = new Date(p.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      var photos = (p.photos || []).map(function (src) {
+        return '<a href="' + src + '" target="_blank" rel="noopener"><img src="' + src + '" alt=""></a>';
+      }).join('');
+      return '<article class="tcg-post">'
+        + '<time class="tcg-post-date">' + date + '</time>'
+        + '<h3 class="tcg-post-title">' + p.title + '</h3>'
+        + '<p class="tcg-post-body">' + p.body + '</p>'
+        + (photos ? '<div class="tcg-post-photos">' + photos + '</div>' : '')
+        + '</article>';
+    }
+  </script>
 </body>
 </html>

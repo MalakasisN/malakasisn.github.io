@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="One Piece TCG blog — trips, tournaments, and card game updates by Nikos Malakasis.">
+  <title>One Piece TCG — Nikos Malakasis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">NM</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="hobbies.html" class="nav-active">Hobbies</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">☀</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <a href="hobbies.html" class="back-link">&larr; Hobbies</a>
+        <span class="hero-label">One Piece TCG</span>
+        <h1 class="page-title">TCG Blog</h1>
+        <p class="page-desc">Trips, tournaments, and card game updates.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="tcg-blog" id="tcg-all"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-info">
+          <span class="footer-name">Nikos Malakasis</span>
+          <span class="footer-loc">Munich, Germany</span>
+        </div>
+        <div class="footer-links">
+          <a href="mailto:malakasisnikos@gmail.com">Email</a>
+          <a href="https://github.com/MalakasisN" target="_blank" rel="noopener">GitHub</a>
+          <a href="Nikos_Malakasis_CV.pdf" target="_blank" rel="noopener">CV</a>
+        </div>
+      </div>
+      <p class="footer-copy">&copy; 2026 Nikos Malakasis</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="tcg-posts.js"></script>
+  <script>
+    (function () {
+      var container = document.getElementById('tcg-all');
+      var posts = window.TCG_POSTS || [];
+      if (!posts.length) {
+        container.innerHTML = '<p class="tcg-empty">No posts yet — check back soon.</p>';
+        return;
+      }
+      container.innerHTML = posts.map(renderPost).join('');
+    }());
+
+    function renderPost(p) {
+      var date = new Date(p.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      var photos = (p.photos || []).map(function (src) {
+        return '<a href="' + src + '" target="_blank" rel="noopener"><img src="' + src + '" alt=""></a>';
+      }).join('');
+      return '<article class="tcg-post">'
+        + '<time class="tcg-post-date">' + date + '</time>'
+        + '<h3 class="tcg-post-title">' + p.title + '</h3>'
+        + '<p class="tcg-post-body">' + p.body + '</p>'
+        + (photos ? '<div class="tcg-post-photos">' + photos + '</div>' : '')
+        + '</article>';
+    }
+  </script>
+</body>
+</html>
