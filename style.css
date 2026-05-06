@@ -1036,10 +1036,15 @@ footer#contact {
   gap: 8px;
   margin-top: 16px;
 }
-.tcg-post-photos a { display: block; }
+.tcg-post-photos a {
+  display: block;
+  width: 100px;
+  height: 70px;
+  flex-shrink: 0;
+}
 .tcg-post-photos img {
-  width: 130px;
-  height: 90px;
+  width: 100px;
+  height: 70px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid var(--border);
