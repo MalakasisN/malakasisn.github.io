@@ -1124,14 +1124,14 @@ footer#contact {
 
 /* ── Project banners (projects page) ───────────────────────────── */
 .project-banners {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
 .project-banner {
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -1148,34 +1148,31 @@ footer#contact {
 }
 
 .project-banner-img {
-  width: 300px;
-  flex-shrink: 0;
+  width: 100%;
   background: #fff;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  aspect-ratio: 4/3;
 }
 .project-banner-img img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
-  max-height: 200px;
 }
 
 .project-banner-body {
-  padding: 28px 32px;
+  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
-  min-width: 0;
 }
 
 .project-banner-label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1183,22 +1180,24 @@ footer#contact {
 }
 
 .project-banner-title {
-  font-size: 1.05rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--text);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .project-banner-desc {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  line-height: 1.65;
+  line-height: 1.6;
+  margin-top: 2px;
 }
 
 .project-banner-arrow {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text-dim);
-  margin-top: 4px;
+  margin-top: auto;
+  padding-top: 8px;
   transition: color 0.2s, transform 0.2s;
   display: inline-block;
 }
@@ -1209,7 +1208,7 @@ footer#contact {
 
 .project-banner-nohover {
   cursor: default;
-  opacity: 0.65;
+  opacity: 0.55;
 }
 .project-banner-nohover:hover {
   border-color: var(--border);
@@ -1218,26 +1217,17 @@ footer#contact {
 }
 
 .project-banner-wip {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   color: var(--text-dim);
-  margin-top: 4px;
+  margin-top: auto;
+  padding-top: 8px;
 }
 
 @media (max-width: 680px) {
-  .project-banner {
-    flex-direction: column;
-  }
-  .project-banner-img {
-    width: 100%;
-    max-height: 180px;
-  }
-  .project-banner-img img {
-    max-height: 180px;
-  }
-  .project-banner-body {
-    padding: 20px 20px;
+  .project-banners {
+    grid-template-columns: 1fr;
   }
 }
 
