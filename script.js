@@ -37,3 +37,22 @@ toggle?.addEventListener('click', () => {
 navLinks?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => navLinks.classList.remove('open'));
 });
+
+// ── Scroll reveal ────────────────────────────────────────────────
+const revealSelector = '.hero-label, .hero-name, .hero-bio, .hero-actions, .hero-photo, .back-link, .page-title, .page-desc, .preview-header, .preview-text, .preview-tags, .section-sub, .exp-preview-item, .pub-preview-item, .hobby-card, .project-banner, .timeline-item, .edu-card, .edu-note, .pub-item, .conf-item, .about-content, .skill-group, .gallery-stack, .chapter-card, .gallery-item';
+const revealEls = document.querySelectorAll(revealSelector);
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!('IntersectionObserver' in window) || reduceMotion) {
+  revealEls.forEach(el => el.classList.add('is-visible'));
+} else {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  revealEls.forEach(el => io.observe(el));
+}
