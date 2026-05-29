@@ -967,11 +967,13 @@ footer#contact {
   gap: 14px;
 }
 .gallery-item {
+  display: block;
   position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
   transition: border-color 0.2s;
+  text-decoration: none;
 }
 .gallery-item:hover { border-color: var(--accent); }
 .gallery-item img {
