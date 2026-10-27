@@ -1,3 +1,4 @@
 .pending-uploads.json
 .photo-upload*
 __pycache__/
+.editor.log

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Website Editor</title>
+<title>NM_editor</title>
 <link rel="icon" href="/preview/favicon.svg" type="image/svg+xml">
 <style>
   :root {
@@ -18,7 +18,8 @@
 
   /* top bar */
   header { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--border); flex: 0 0 auto; }
-  header h1 { font-size: 15px; margin: 0 8px 0 0; font-weight: 600; letter-spacing: .2px; }
+  header h1 { font-size: 15px; margin: 0 8px 0 0; font-weight: 600; letter-spacing: .2px; display: flex; align-items: center; gap: 8px; }
+  header h1 img { width: 22px; height: 22px; border-radius: 5px; }
   .pill { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
   .pill.dirty { color: var(--warn); border-color: var(--warn); }
   .pill.saved { color: var(--accent); border-color: var(--accent); }
@@ -129,13 +130,14 @@
 <body>
 
 <header>
-  <h1>Website Editor</h1>
+  <h1><img src="/preview/favicon.svg" alt="">NM_editor</h1>
   <span class="pill" id="status-pill">Loading…</span>
   <span class="spacer"></span>
   <button class="btn" id="btn-toggle-preview">Hide preview</button>
   <button class="btn danger" id="btn-discard">Discard changes…</button>
   <button class="btn" id="btn-save">Save &amp; preview<kbd>⌘S</kbd></button>
   <button class="btn primary" id="btn-publish">Publish…</button>
+  <button class="btn" id="btn-quit" title="Stop the editor">Quit</button>
 </header>
 
 <div class="layout">
@@ -655,6 +657,12 @@ async function loadContent() {
   $('#btn-save').onclick = () => save();
   $('#btn-publish').onclick = publishDialog;
   $('#btn-discard').onclick = discardDialog;
+  $('#btn-quit').onclick = async () => {
+    if (isDirty() && !confirm('You have unsaved edits. Quit anyway?')) return;
+    savedJson = snapshot();
+    try { await fetch('/api/quit', { method: 'POST' }); } catch (e) {}
+    document.body.innerHTML = '<div style="padding:40px;color:#8b8f9a;font-size:15px">NM_editor stopped. You can close this tab. Double-click NM_editor.app to start it again.</div>';
+  };
   $('#modal-bg').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
   document.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); save(); } if (e.key === 'Escape') closeModal(); });
   window.addEventListener('beforeunload', e => { if (isDirty()) { e.preventDefault(); e.returnValue = ''; } });

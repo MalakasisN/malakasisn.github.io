@@ -1,6 +1,6 @@
-"""Local website editor: edit content.json through a browser UI, preview the site, publish to GitHub Pages.
+"""NM_editor: edit content.json through a browser UI, preview the site, publish to GitHub Pages.
 
-Run:  python3 admin/app.py        (then open http://127.0.0.1:8787)
+Run:  python3 admin/app.py   (or double-click NM_editor.app; the UI opens at http://127.0.0.1:8787)
 """
 import json
 import mimetypes
@@ -26,7 +26,8 @@ MAX_IMAGE_PX = 1600
 JPEG_QUALITY = "normal"
 PHOTO_PX = 400
 SITE_FILES = ["content.json", "style.css", "script.js", "favicon.svg", "og-image.jpg", ".nojekyll", "README.md",
-              "admin/app.py", "admin/build.py", "admin/ui.html", "admin/.gitignore", "Edit Website.command"] + list(build.RENDERERS)
+              "admin/app.py", "admin/build.py", "admin/ui.html", "admin/.gitignore",
+              "NM_editor.app/Contents/Info.plist", "NM_editor.app/Contents/MacOS/NM_editor", "NM_editor.app/Contents/Resources/NM_editor.icns"] + list(build.RENDERERS)
 
 
 # ── helpers ──────────────────────────────────────────────────────
@@ -183,7 +184,7 @@ def make_profile_photo(src, jpg_rel, webp_rel):
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
-        if "/preview/" not in (args[0] if args else ""):
+        if "/preview/" not in (fmt % args):
             super().log_message(fmt, *args)
 
     def send_json(self, obj, status=200):
@@ -320,6 +321,10 @@ class Handler(BaseHTTPRequestHandler):
                 result["site_url"] = content["site"]["base_url"]
                 self.send_json(result)
 
+            elif path == "/api/quit":
+                self.send_json({"ok": True})
+                threading.Thread(target=self.server.shutdown, daemon=True).start()
+
             elif path == "/api/discard":
                 tracked = tracked_files()
                 status = git_status()
@@ -344,9 +349,15 @@ class Handler(BaseHTTPRequestHandler):
 
 def main():
     os.chdir(ROOT)
-    server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
     url = f"http://127.0.0.1:{PORT}/"
-    print(f"Website editor running at {url}  (Ctrl+C to stop)")
+    try:
+        server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+    except OSError:
+        print(f"NM_editor is already running at {url}")
+        if "--no-browser" not in sys.argv:
+            webbrowser.open(url)
+        return
+    print(f"NM_editor running at {url}  (Ctrl+C to stop)")
     if "--no-browser" not in sys.argv:
         threading.Timer(0.6, lambda: webbrowser.open(url)).start()
     try:

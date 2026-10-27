@@ -1,0 +1,6 @@
+#!/bin/bash
+# NM_editor: launches the local website editor (admin/app.py) and opens it in the browser.
+ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+cd "$ROOT" || exit 1
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+exec python3 admin/app.py > admin/.editor.log 2>&1
