@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Editor</title>
+<link rel="icon" href="/preview/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #0f1013; --panel: #17181c; --panel-2: #1e2026; --border: #2a2d35; --text: #e8e8ea; --muted: #8b8f9a;
+    --accent: #6ea8fe; --accent-2: #2f6fdb; --ok: #3ddc97; --warn: #f5b84c; --danger: #ef6b6b; --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; display: flex; flex-direction: column; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  a { color: var(--accent); }
+
+  /* top bar */
+  header { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--border); flex: 0 0 auto; }
+  header h1 { font-size: 15px; margin: 0 8px 0 0; font-weight: 600; letter-spacing: .2px; }
+  .pill { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+  .pill.dirty { color: var(--warn); border-color: var(--warn); }
+  .pill.saved { color: var(--accent); border-color: var(--accent); }
+  .pill.clean { color: var(--ok); border-color: var(--ok); }
+  .spacer { flex: 1; }
+  .btn { background: var(--panel-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 7px 14px; cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: #3d414c; }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .btn.primary { background: var(--accent-2); border-color: var(--accent-2); color: #fff; }
+  .btn.primary:hover { background: #3a7ae8; }
+  .btn.danger { color: var(--danger); }
+  .btn.small { padding: 4px 10px; font-size: 12px; }
+  .btn.icon { padding: 4px 8px; font-size: 12px; line-height: 1; }
+  kbd { font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; margin-left: 6px; }
+
+  /* layout */
+  .layout { display: flex; flex: 1 1 auto; min-height: 0; }
+  nav.sections { width: 190px; flex: 0 0 auto; background: var(--panel); border-right: 1px solid var(--border); padding: 12px 8px; overflow-y: auto; }
+  nav.sections button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--muted); }
+  nav.sections button:hover { background: var(--panel-2); color: var(--text); }
+  nav.sections button.active { background: var(--panel-2); color: var(--text); font-weight: 600; }
+  nav.sections .nav-footer { margin-top: 18px; padding: 10px 12px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+  nav.sections .nav-footer div { margin-top: 4px; word-break: break-word; }
+
+  main.editor { width: 520px; flex: 0 0 auto; overflow-y: auto; padding: 20px 22px 60px; border-right: 1px solid var(--border); }
+  main.editor.wide { flex: 1 1 auto; width: auto; }
+  main.editor h2 { font-size: 20px; margin: 0 0 4px; }
+  main.editor .section-help { color: var(--muted); margin: 0 0 18px; font-size: 13px; }
+
+  aside.preview { flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; background: #000; }
+  aside.preview.hidden { display: none; }
+  .preview-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--panel); border-bottom: 1px solid var(--border); }
+  .preview-bar select { background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; }
+  .preview-frame-wrap { flex: 1 1 auto; display: flex; justify-content: center; background: #0a0a0c; overflow: auto; }
+  .preview-frame-wrap iframe { border: 0; width: 100%; height: 100%; background: #fff; }
+  .preview-frame-wrap.mobile iframe { width: 390px; margin: 16px auto; height: calc(100% - 32px); border: 1px solid var(--border); border-radius: 18px; }
+
+  /* fields */
+  .field { margin-bottom: 14px; }
+  .field > label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .4px; }
+  .field .help { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .field input[type=text], .field input[type=date], .field input[type=number], .field input[type=url], .field textarea, .field select {
+    width: 100%; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; outline: none;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+  .field textarea { min-height: 80px; resize: vertical; line-height: 1.5; }
+  .field textarea.tall { min-height: 160px; }
+  .field.checkbox label { display: flex; align-items: center; gap: 8px; text-transform: none; font-size: 14px; color: var(--text); font-weight: 500; cursor: pointer; }
+  .field.checkbox input { width: 16px; height: 16px; accent-color: var(--accent-2); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .group { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; background: rgba(255,255,255,.015); }
+  .group > summary { cursor: pointer; padding: 10px 14px; font-weight: 600; list-style: none; display: flex; align-items: center; }
+  .group > summary::before { content: "▸"; margin-right: 8px; color: var(--muted); font-size: 12px; }
+  .group[open] > summary::before { content: "▾"; }
+  .group > .group-body { padding: 4px 14px 2px; border-top: 1px solid var(--border); }
+
+  .list { margin-bottom: 18px; }
+  .list-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .list-head label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  .item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; background: var(--panel); }
+  .item > summary { list-style: none; display: flex; align-items: center; gap: 8px; padding: 9px 12px; cursor: pointer; }
+  .item > summary::before { content: "▸"; color: var(--muted); font-size: 12px; }
+  .item[open] > summary::before { content: "▾"; }
+  .item > summary .title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+  .item > summary .tools { display: flex; gap: 4px; }
+  .item > .item-body { padding: 12px 12px 2px; border-top: 1px solid var(--border); }
+  .item.empty-hint { color: var(--muted); padding: 12px; font-size: 13px; }
+
+  .tags-input { display: flex; flex-wrap: wrap; gap: 6px; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; }
+  .tags-input:focus-within { border-color: var(--accent); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px 2px 10px; font-size: 13px; }
+  .chip button { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0; font-size: 14px; line-height: 1; }
+  .chip button:hover { color: var(--danger); }
+  .tags-input input { flex: 1; min-width: 120px; background: none; border: 0; outline: none; padding: 3px 4px; }
+
+  .image-field { display: flex; gap: 12px; align-items: flex-start; }
+  .image-field .thumb { width: 96px; height: 72px; flex: 0 0 auto; border-radius: 6px; background: var(--panel-2) center/cover no-repeat; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 11px; }
+  .image-field .thumb.round { border-radius: 50%; width: 72px; }
+  .image-field .image-main { flex: 1; min-width: 0; }
+  .image-field input[type=text] { font-size: 12px; margin-bottom: 6px; }
+  .image-field .image-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .image-field .status { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .photos-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .photos-grid .photo { width: 110px; }
+  .photos-grid .photo .thumb { width: 110px; height: 82px; border-radius: 6px; background: var(--panel-2) center/cover no-repeat; border: 1px solid var(--border); }
+  .photos-grid .photo .ptools { display: flex; gap: 4px; margin-top: 4px; }
+  .photos-grid .add { width: 110px; height: 82px; border: 1px dashed var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--muted); cursor: pointer; }
+  .photos-grid .add:hover { border-color: var(--accent); color: var(--accent); }
+  .drop-active { outline: 2px dashed var(--accent); outline-offset: 2px; }
+
+  /* modal */
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 50; }
+  .modal-bg.open { display: flex; }
+  .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; width: min(560px, 92vw); max-height: 85vh; overflow: auto; padding: 22px 24px; }
+  .modal h3 { margin: 0 0 10px; font-size: 17px; }
+  .modal p { color: var(--muted); margin: 0 0 12px; }
+  .modal ul.files { margin: 0 0 14px; padding: 10px 12px; list-style: none; background: var(--bg); border-radius: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; max-height: 200px; overflow: auto; }
+  .modal .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+  .modal pre { background: var(--bg); padding: 10px; border-radius: 6px; font-size: 12px; white-space: pre-wrap; max-height: 220px; overflow: auto; }
+  .ok { color: var(--ok); } .err { color: var(--danger); }
+
+  #toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--panel-2); border: 1px solid var(--border); padding: 10px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 60; }
+  #toast.show { opacity: 1; }
+  @media (max-width: 1100px) { aside.preview { display: none; } main.editor { flex: 1; width: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Website Editor</h1>
+  <span class="pill" id="status-pill">Loading…</span>
+  <span class="spacer"></span>
+  <button class="btn" id="btn-toggle-preview">Hide preview</button>
+  <button class="btn danger" id="btn-discard">Discard changes…</button>
+  <button class="btn" id="btn-save">Save &amp; preview<kbd>⌘S</kbd></button>
+  <button class="btn primary" id="btn-publish">Publish…</button>
+</header>
+
+<div class="layout">
+  <nav class="sections" id="sections"></nav>
+  <main class="editor" id="editor"></main>
+  <aside class="preview" id="preview">
+    <div class="preview-bar">
+      <select id="preview-page"></select>
+      <button class="btn small" id="btn-reload">Reload</button>
+      <button class="btn small" id="btn-mobile">Mobile view</button>
+      <span class="spacer"></span>
+      <a href="/preview/index.html" target="_blank" style="font-size:12px">Open in new tab ↗</a>
+    </div>
+    <div class="preview-frame-wrap" id="frame-wrap"><iframe id="frame" src="/preview/index.html"></iframe></div>
+  </aside>
+</div>
+
+<div class="modal-bg" id="modal-bg"><div class="modal" id="modal"></div></div>
+<div id="toast"></div>
+<input type="file" id="file-input" hidden>
+
+<script>
+// ── schema ───────────────────────────────────────────────────────
+const META = { key: 'meta', type: 'group', label: 'Page metadata (browser title & link previews)', fields: [
+  { key: 'title', label: 'Browser tab title' },
+  { key: 'description', label: 'Search description', type: 'textarea' },
+  { key: 'og_title', label: 'Link preview title' },
+  { key: 'og_description', label: 'Link preview description', type: 'textarea' },
+]};
+const PAGE_HEADER = [
+  { key: 'hero_label', label: 'Small label above title' },
+  { key: 'title', label: 'Page title' },
+  { key: 'desc', label: 'Subtitle' },
+];
+const HTML_HELP = 'Basic HTML is allowed: &lt;a href="…"&gt;link&lt;/a&gt;, &lt;em&gt;italic&lt;/em&gt;, &lt;strong&gt;bold&lt;/strong&gt;.';
+
+const SECTIONS = [
+  { id: 'site', label: 'Site & contact', path: 'site', help: 'Name, links and files used across every page.', fields: [
+    { key: 'name', label: 'Full name' },
+    { key: 'initials', label: 'Logo initials (top-left)' },
+    { key: 'author_short', label: 'Your name as it appears in author lists', help: 'This exact text is shown in bold in publication author lists.' },
+    { key: 'email', label: 'Email' },
+    { key: 'location', label: 'Location (footer)' },
+    { key: 'github', label: 'GitHub URL' },
+    { key: 'linkedin', label: 'LinkedIn URL' },
+    { key: 'scholar', label: 'Google Scholar URL' },
+    { key: 'photo', label: 'Profile photo', type: 'photo', help: 'Any photo works: it is cropped square and resized to 400px automatically.' },
+    { key: 'cv_file', label: 'CV (PDF)', type: 'file', help: 'Upload a new PDF to replace the current CV. The file name on the site stays the same.' },
+    { key: 'copyright_year', label: 'Copyright year (footer)', type: 'number' },
+    { key: 'base_url', label: 'Public site URL', help: 'Used for link previews. Only change if the site moves.' },
+  ]},
+  { id: 'home', label: 'Home', path: 'home', help: 'The landing page. The experience, publication and project lists shown here are picked with the "Show on home page" checkbox in their own sections.', fields: [
+    { key: 'hero_label', label: 'Label above your name' },
+    { key: 'hero_name', label: 'Big name', type: 'textarea', help: 'One line per row (press Enter to break the line).' },
+    { key: 'hero_bio', label: 'Intro sentence', type: 'textarea' },
+    { key: 'about_text', label: 'About preview text', type: 'textarea', help: HTML_HELP },
+    { key: 'about_tags', label: 'About preview tags', type: 'tags' },
+    { key: 'projects_intro', label: 'Projects preview intro' },
+    { key: 'hobby_cards', label: 'Hobby cards', type: 'list', title: it => it.title, item: [
+      { key: 'title', label: 'Title' },
+      { key: 'desc', label: 'Description' },
+      { key: 'link', label: 'Link', help: 'e.g. hobbies.html#tcg' },
+      { key: 'icon', label: 'Icon', type: 'select', options: ['image', 'book', 'layers'] },
+    ]},
+    META,
+  ]},
+  { id: 'about', label: 'About', path: 'about', fields: [
+    ...PAGE_HEADER,
+    { key: 'bio', label: 'Bio', type: 'textarea', tall: true, help: 'Separate paragraphs with an empty line. ' + HTML_HELP },
+    { key: 'skills', label: 'Skill groups', type: 'list', title: it => it.label, item: [
+      { key: 'label', label: 'Group name' },
+      { key: 'tags', label: 'Skills', type: 'tags' },
+    ]},
+    META,
+  ]},
+  { id: 'experience', label: 'Experience', path: 'experience', fields: [
+    ...PAGE_HEADER,
+    { key: 'research', label: 'Research experience', type: 'list', title: it => `${it.role} — ${it.org}`, item: [
+      { key: 'role', label: 'Role' },
+      { key: 'org', label: 'Organisation' },
+      { key: 'org_short', label: 'Short organisation name (home page)', help: 'Optional. Leave empty to reuse the full name.' },
+      { key: 'date', label: 'Dates', help: 'e.g. Oct 2022 – Present' },
+      { key: 'bullets', label: 'Bullet points', type: 'lines', help: 'One bullet per line. ' + HTML_HELP },
+      { key: 'featured', label: 'Show on home page', type: 'checkbox' },
+    ]},
+    { key: 'education', label: 'Education', type: 'list', title: it => it.degree, item: [
+      { key: 'degree', label: 'Degree' },
+      { key: 'institution', label: 'Institution' },
+      { key: 'year', label: 'Year & place', help: 'e.g. Dec 2021 · Crete, Greece' },
+      { key: 'grade', label: 'Grade (optional)' },
+    ]},
+    { key: 'courses', label: 'Courses & training', type: 'list', title: it => it.name, item: [
+      { key: 'name', label: 'Course' },
+      { key: 'org', label: 'Organisation' },
+      { key: 'date', label: 'Year' },
+      { key: 'bullets', label: 'Bullet points', type: 'lines', help: 'One bullet per line.' },
+    ]},
+    META,
+  ]},
+  { id: 'publications', label: 'Publications', path: 'publications', fields: [
+    ...PAGE_HEADER,
+    { key: 'papers', label: 'Papers', type: 'list', title: it => it.title, item: [
+      { key: 'title', label: 'Title' },
+      { key: 'authors', label: 'Authors', help: 'Comma-separated. Your name (see Site & contact) is bolded automatically.' },
+      { key: 'venue', label: 'Journal / venue & year', help: 'e.g. eLife, 2025' },
+      { key: 'venue_short', label: 'Short venue (home page)', help: 'Optional.' },
+      { key: 'doi', label: 'DOI', help: 'Just the DOI, e.g. 10.7554/eLife.108643.1' },
+      { key: 'featured', label: 'Show on home page', type: 'checkbox' },
+    ]},
+    { key: 'talks', label: 'Conference presentations', type: 'list', title: it => `${it.year} — ${it.title}`, item: [
+      { key: 'title', label: 'Title' },
+      { key: 'year', label: 'Year' },
+      { key: 'venue', label: 'Venue & format', help: 'e.g. Cosyne 2024 · Poster' },
+    ]},
+    META,
+  ]},
+  { id: 'projects', label: 'Projects', path: 'projects', fields: [
+    ...PAGE_HEADER,
+    { key: 'items', label: 'Projects', type: 'list', title: it => it.title, item: [
+      { key: 'label', label: 'Small label', help: 'e.g. "Malakasis et al. 2023" or "In preparation"' },
+      { key: 'title', label: 'Title' },
+      { key: 'desc', label: 'One-line description (optional)' },
+      { key: 'tags', label: 'Tags', type: 'tags' },
+      { key: 'image', label: 'Banner image', type: 'image', folder: 'Projects/Project_Summary_Images' },
+      { key: 'image_alt', label: 'Image description (accessibility)' },
+      { key: 'link', label: 'Link to paper / page', help: 'Leave empty for work in progress; the card then shows the status text below instead of a link.' },
+      { key: 'status_text', label: 'Status text when there is no link', help: 'e.g. In progress' },
+      { key: 'featured', label: 'Show on home page', type: 'checkbox' },
+    ]},
+    META,
+  ]},
+  { id: 'hobbies', label: 'Hobbies', path: 'hobbies', fields: [
+    ...PAGE_HEADER,
+    { key: 'ai_art', type: 'group', label: 'AI art gallery', open: true, fields: [
+      { key: 'heading', label: 'Section heading' },
+      { key: 'intro', label: 'Intro' },
+      { key: 'stack_image', label: 'Cover image (shown on the Hobbies page)', type: 'select', options: (c) => c.hobbies.ai_art.items.map(i => ({ value: i.image, label: i.title })) },
+      { key: 'items', label: 'Artworks', type: 'list', title: it => it.title, item: [
+        { key: 'title', label: 'Title' },
+        { key: 'image', label: 'Image', type: 'image', folder: 'Hobbies/AI Art Gallery' },
+      ]},
+    ]},
+    { key: 'manga', type: 'group', label: 'AI One Piece manga', fields: [
+      { key: 'heading', label: 'Section heading' },
+      { key: 'intro', label: 'Intro', type: 'textarea' },
+      { key: 'disclaimer', label: 'Disclaimer', type: 'textarea' },
+      { key: 'chapters', label: 'Chapters', type: 'list', title: it => it.label, item: [
+        { key: 'label', label: 'Label' },
+        { key: 'cover', label: 'Cover image', type: 'image', folder: 'Hobbies/AI One Piece Inspired Manga' },
+        { key: 'link', label: 'Link to chapter (e.g. Google Drive)' },
+      ]},
+    ]},
+    { key: 'tcg', type: 'group', label: 'One Piece TCG section', fields: [
+      { key: 'heading', label: 'Section heading' },
+      { key: 'intro', label: 'Intro' },
+      { key: 'preview_count', label: 'Number of latest posts shown on the Hobbies page', type: 'number' },
+    ]},
+    META,
+    { key: '$ai_gallery', type: 'group', label: 'AI gallery page (ai-gallery.html)', path: 'ai_gallery', fields: [...PAGE_HEADER, META] },
+  ]},
+  { id: 'blog', label: 'TCG blog posts', path: 'hobbies.tcg', help: 'Posts are shown newest first on the blog page; the latest few also appear on the Hobbies page.', fields: [
+    { key: 'posts', label: 'Posts', type: 'list', title: it => `${it.date} — ${it.title}`, addFirst: true, newItem: () => ({ date: new Date().toISOString().slice(0, 10), title: '', body: '', photos: [] }), item: [
+      { key: 'date', label: 'Date', type: 'date' },
+      { key: 'title', label: 'Title' },
+      { key: 'body', label: 'Text', type: 'textarea', tall: true, help: HTML_HELP },
+      { key: 'photos', label: 'Photos', type: 'images', folder: it => 'Hobbies/One Piece TCG/' + (slug(it.title) || 'post') },
+    ]},
+    { key: '$tcg_blog', type: 'group', label: 'Blog page header (tcg-blog.html)', path: 'tcg_blog', fields: [...PAGE_HEADER, META] },
+  ]},
+];
+
+// ── state ────────────────────────────────────────────────────────
+let content = null;
+let savedJson = '';
+let gitStatus = null;
+let current = SECTIONS.some(s => s.id === location.hash.slice(1)) ? location.hash.slice(1) : (localStorage.getItem('editor-section') || 'site');
+const $ = s => document.querySelector(s);
+
+function slug(s) { return (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+function getPath(obj, path) { return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj); }
+function esc(s) { return String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+function stripUi(obj) { return JSON.parse(JSON.stringify(obj, (k, v) => k === '$open' ? undefined : v)); }
+function snapshot() { return JSON.stringify(stripUi(content)); }
+function isDirty() { return snapshot() !== savedJson; }
+function toast(msg, ms = 2200) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), ms); }
+function previewUrl(p) { return '/preview/' + p.split('/').map(encodeURIComponent).join('/') + '?v=' + Date.now(); }
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, opts);
+  const data = await r.json().catch(() => ({ error: 'Bad response' }));
+  if (!r.ok || data.error) throw new Error(data.error || r.statusText);
+  return data;
+}
+
+function updateStatusPill() {
+  const pill = $('#status-pill');
+  if (isDirty()) { pill.textContent = 'Unsaved edits'; pill.className = 'pill dirty'; return; }
+  if (gitStatus && gitStatus.to_publish.length) { pill.textContent = `Saved · ${gitStatus.to_publish.length} file(s) not yet published`; pill.className = 'pill saved'; return; }
+  if (gitStatus && gitStatus.unpushed && gitStatus.unpushed !== '0') { pill.textContent = 'Committed, not pushed'; pill.className = 'pill saved'; return; }
+  pill.textContent = 'Everything published'; pill.className = 'pill clean';
+}
+
+// ── rendering ────────────────────────────────────────────────────
+function renderNav() {
+  const nav = $('#sections');
+  nav.innerHTML = SECTIONS.map(s => `<button data-id="${s.id}" class="${s.id === current ? 'active' : ''}">${s.label}</button>`).join('')
+    + `<div class="nav-footer">Branch <b>${esc(gitStatus?.branch || '')}</b><div>Last publish: ${esc(gitStatus?.last_commit || '—')}</div></div>`;
+  nav.querySelectorAll('button').forEach(b => b.onclick = () => { current = b.dataset.id; localStorage.setItem('editor-section', current); history.replaceState(null, '', '#' + current); renderNav(); renderEditor(); });
+}
+
+function renderEditor() {
+  const sec = SECTIONS.find(s => s.id === current);
+  const ed = $('#editor');
+  const scroll = ed.scrollTop;
+  ed.innerHTML = `<h2>${sec.label}</h2><p class="section-help">${sec.help || 'Edit the fields below, then “Save & preview” to see the result on the right.'}</p>`
+    + renderFields(sec.fields, getPath(content, sec.path), sec.path);
+  bindFields(ed);
+  ed.scrollTop = scroll;
+}
+
+function renderFields(fields, obj, basePath) {
+  return fields.map(f => renderField(f, obj, basePath)).join('');
+}
+
+function renderField(f, obj, basePath) {
+  if (f.type === 'group') {
+    const path = f.path || `${basePath}.${f.key}`;
+    const target = f.path ? getPath(content, f.path) : obj[f.key];
+    return `<details class="group" ${f.open ? 'open' : ''}><summary>${f.label}</summary><div class="group-body">${renderFields(f.fields, target, path)}</div></details>`;
+  }
+  const path = `${basePath}.${f.key}`;
+  const val = obj[f.key];
+  const help = f.help ? `<div class="help">${f.help}</div>` : '';
+  const id = 'f_' + path.replace(/[^\w]/g, '_');
+  switch (f.type) {
+    case 'textarea':
+      return `<div class="field"><label for="${id}">${f.label}</label><textarea id="${id}" data-path="${path}" class="${f.tall ? 'tall' : ''}">${esc(val)}</textarea>${help}</div>`;
+    case 'lines':
+      return `<div class="field"><label for="${id}">${f.label}</label><textarea id="${id}" data-path="${path}" data-kind="lines">${esc((val || []).join('\n'))}</textarea>${help}</div>`;
+    case 'checkbox':
+      return `<div class="field checkbox"><label><input type="checkbox" data-path="${path}" ${val ? 'checked' : ''}> ${f.label}</label>${help}</div>`;
+    case 'number':
+      return `<div class="field"><label for="${id}">${f.label}</label><input type="number" id="${id}" data-path="${path}" data-kind="number" value="${esc(val)}">${help}</div>`;
+    case 'date':
+      return `<div class="field"><label for="${id}">${f.label}</label><input type="date" id="${id}" data-path="${path}" value="${esc(val)}">${help}</div>`;
+    case 'select': {
+      const opts = (typeof f.options === 'function' ? f.options(content) : f.options).map(o => typeof o === 'string' ? { value: o, label: o } : o);
+      return `<div class="field"><label for="${id}">${f.label}</label><select id="${id}" data-path="${path}">${opts.map(o => `<option value="${esc(o.value)}" ${o.value === val ? 'selected' : ''}>${esc(o.label)}</option>`).join('')}</select>${help}</div>`;
+    }
+    case 'tags':
+      return `<div class="field"><label>${f.label}</label><div class="tags-input" data-path="${path}">${(val || []).map((tg, i) => `<span class="chip">${esc(tg)}<button type="button" data-remove="${i}" title="Remove">×</button></span>`).join('')}<input type="text" placeholder="Type and press Enter"></div>${help || '<div class="help">Press Enter or comma to add. Backspace removes the last one.</div>'}</div>`;
+    case 'image':
+      return `<div class="field"><label>${f.label}</label><div class="image-field" data-path="${path}" data-folder="${esc(f.folder)}">
+        <div class="thumb" style="${val ? `background-image:url('${previewUrl(val)}')` : ''}">${val ? '' : 'No image'}</div>
+        <div class="image-main"><input type="text" data-path="${path}" value="${esc(val)}" placeholder="path/to/image.jpg">
+        <div class="image-actions"><button type="button" class="btn small" data-upload>Upload image…</button><button type="button" class="btn small" data-pick>Choose existing…</button></div>
+        <div class="status">Drop an image on the thumbnail to upload.</div></div></div>${help}</div>`;
+    case 'images':
+      return `<div class="field"><label>${f.label}</label><div class="photos-grid" data-path="${path}" data-folder="${esc(typeof f.folder === 'function' ? f.folder(obj) : f.folder)}">
+        ${(val || []).map((p, i) => `<div class="photo"><div class="thumb" style="background-image:url('${previewUrl(p)}')" title="${esc(p)}"></div><div class="ptools"><button type="button" class="btn icon" data-move="${i}:-1" title="Move left">←</button><button type="button" class="btn icon" data-move="${i}:1" title="Move right">→</button><button type="button" class="btn icon danger" data-remove="${i}" title="Remove">×</button></div></div>`).join('')}
+        <div class="add" data-upload title="Upload photos">+ Add</div></div><div class="help">Photos are resized for the web automatically (max 1600px). You can drop several files at once.</div></div>`;
+    case 'photo':
+      return `<div class="field"><label>${f.label}</label><div class="image-field" data-path="${path}" data-kind="photo">
+        <div class="thumb round" style="background-image:url('${previewUrl(val)}')"></div>
+        <div class="image-main"><div class="image-actions"><button type="button" class="btn small" data-upload>Upload new photo…</button></div><div class="status">Current: ${esc(val)}</div></div></div>${help}</div>`;
+    case 'file':
+      return `<div class="field"><label>${f.label}</label><div class="image-field" data-path="${path}" data-kind="file">
+        <div class="image-main"><div class="image-actions"><button type="button" class="btn small" data-upload>Upload new PDF…</button><a class="btn small" href="${previewUrl(val)}" target="_blank">View current</a></div><div class="status">Current: ${esc(val)}</div></div></div>${help}</div>`;
+    case 'list': {
+      const items = val || [];
+      const addBtn = `<button type="button" class="btn small" data-add="${path}">+ Add</button>`;
+      return `<div class="list" data-path="${path}"><div class="list-head"><label>${f.label}</label>${addBtn}</div>
+        ${items.length ? '' : '<div class="item empty-hint">Nothing here yet. Click “+ Add”.</div>'}
+        ${items.map((it, i) => `<details class="item" data-index="${i}" ${it.$open ? 'open' : ''}><summary><span class="title">${esc(f.title(it) || '(untitled)')}</span><span class="tools">
+          <button type="button" class="btn icon" data-move="${i}:-1" title="Move up">↑</button><button type="button" class="btn icon" data-move="${i}:1" title="Move down">↓</button><button type="button" class="btn icon danger" data-remove="${i}" title="Delete">×</button></span></summary>
+          <div class="item-body">${renderFields(f.item, it, `${path}.${i}`)}</div></details>`).join('')}</div>`;
+    }
+    default:
+      return `<div class="field"><label for="${id}">${f.label}</label><input type="text" id="${id}" data-path="${path}" value="${esc(val)}">${help}</div>`;
+  }
+}
+
+function setPath(path, value) {
+  const keys = path.split('.');
+  let o = content;
+  for (const k of keys.slice(0, -1)) o = o[k];
+  o[keys[keys.length - 1]] = value;
+  updateStatusPill();
+}
+
+function findFieldDef(path) {
+  // resolve the schema field for a data path (used for list add)
+  const keys = path.split('.');
+  let fields = null, base = null;
+  for (const s of SECTIONS) if (path.startsWith(s.path + '.') && (base === null || s.path.length > base.length)) { fields = s.fields; base = s.path; }
+  for (const s of SECTIONS) for (const f of s.fields) if (f.type === 'group' && f.path && path.startsWith(f.path + '.') && f.path.length > (base || '').length) { fields = f.fields; base = f.path; }
+  function search(fields, base) {
+    for (const f of fields) {
+      if (f.type === 'group') { const r = search(f.fields, f.path || `${base}.${f.key}`); if (r) return r; }
+      else if (`${base}.${f.key}` === path) return f;
+      else if (f.type === 'list' && path.startsWith(`${base}.${f.key}.`)) {
+        const rest = path.slice(`${base}.${f.key}.`.length).split('.');
+        const r = search(f.item, `${base}.${f.key}.${rest[0]}`); if (r) return r;
+      }
+    }
+    return null;
+  }
+  return search(fields, base);
+}
+
+function emptyItem(fieldDef) {
+  if (fieldDef.newItem) return fieldDef.newItem();
+  const it = {};
+  for (const f of fieldDef.item) it[f.key] = f.type === 'checkbox' ? false : (f.type === 'tags' || f.type === 'lines' || f.type === 'images') ? [] : f.type === 'number' ? 0 : '';
+  return it;
+}
+
+function bindFields(root) {
+  root.querySelectorAll('input[data-path], textarea[data-path], select[data-path]').forEach(el => {
+    el.addEventListener('input', () => {
+      let v = el.value;
+      if (el.type === 'checkbox') v = el.checked;
+      else if (el.dataset.kind === 'lines') v = v.split('\n').map(s => s.trim()).filter(Boolean);
+      else if (el.dataset.kind === 'number') v = Number(v);
+      setPath(el.dataset.path, v);
+      const item = el.closest('.item');
+      if (item) refreshItemTitle(item);
+    });
+  });
+  root.querySelectorAll('.tags-input').forEach(box => {
+    const path = box.dataset.path, input = box.querySelector('input');
+    const add = () => { const v = input.value.replace(/,$/, '').trim(); if (!v) return; const arr = getPath(content, path); arr.push(v); setPath(path, arr); input.value = ''; renderEditor(); focusPath(path); };
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); add(); }
+      else if (e.key === 'Backspace' && !input.value) { const arr = getPath(content, path); arr.pop(); setPath(path, arr); renderEditor(); focusPath(path); }
+    });
+    input.addEventListener('blur', add);
+    box.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { const arr = getPath(content, path); arr.splice(+b.dataset.remove, 1); setPath(path, arr); renderEditor(); });
+    box.addEventListener('click', e => { if (e.target === box) input.focus(); });
+  });
+  root.querySelectorAll('.list').forEach(list => {
+    const path = list.dataset.path;
+    list.querySelector('[data-add]').onclick = () => {
+      const def = findFieldDef(path), arr = getPath(content, path);
+      const it = emptyItem(def); it.$open = true;
+      def.addFirst ? arr.unshift(it) : arr.push(it);
+      setPath(path, arr); renderEditor();
+      const el = list.closest('main').querySelector(`.list[data-path="${path}"] .item[open]`); el?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    };
+    list.querySelectorAll(':scope > .item > summary [data-move]').forEach(b => b.onclick = e => {
+      e.preventDefault(); const [i, d] = b.dataset.move.split(':').map(Number); const arr = getPath(content, path); const j = i + d;
+      if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; setPath(path, arr); renderEditor();
+    });
+    list.querySelectorAll(':scope > .item > summary [data-remove]').forEach(b => b.onclick = e => {
+      e.preventDefault(); const i = +b.dataset.remove; const arr = getPath(content, path);
+      if (!confirm('Delete this entry?')) return; arr.splice(i, 1); setPath(path, arr); renderEditor();
+    });
+    list.querySelectorAll(':scope > .item').forEach(d => d.addEventListener('toggle', () => { getPath(content, path)[+d.dataset.index].$open = d.open; }));
+  });
+  root.querySelectorAll('.image-field').forEach(box => bindImageField(box));
+  root.querySelectorAll('.photos-grid').forEach(box => bindPhotosGrid(box));
+}
+
+function focusPath(path) { const box = document.querySelector(`.tags-input[data-path="${path}"] input`); box?.focus(); }
+
+function refreshItemTitle(item) {
+  const list = item.parentElement, def = findFieldDef(list.dataset.path);
+  const it = getPath(content, list.dataset.path)[+item.dataset.index];
+  item.querySelector('summary .title').textContent = def.title(it) || '(untitled)';
+}
+
+// ── uploads ──────────────────────────────────────────────────────
+function pickFiles(accept, multiple) {
+  return new Promise(resolve => {
+    const inp = $('#file-input'); inp.accept = accept; inp.multiple = !!multiple; inp.value = '';
+    inp.onchange = () => resolve([...inp.files]); inp.click();
+  });
+}
+
+async function uploadFile(file, folder) {
+  const q = new URLSearchParams({ folder, name: file.name });
+  return api('/api/upload?' + q, { method: 'POST', body: file });
+}
+
+function dropZone(el, handler) {
+  el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drop-active'); });
+  el.addEventListener('dragleave', () => el.classList.remove('drop-active'));
+  el.addEventListener('drop', e => { e.preventDefault(); el.classList.remove('drop-active'); handler([...e.dataTransfer.files]); });
+}
+
+function bindImageField(box) {
+  const path = box.dataset.path, kind = box.dataset.kind, status = box.querySelector('.status');
+  const setStatus = (m, cls = '') => { status.textContent = m; status.className = 'status ' + cls; };
+  async function handle(files) {
+    const file = files[0]; if (!file) return;
+    setStatus('Uploading…');
+    try {
+      if (kind === 'photo') {
+        const r = await api('/api/photo?' + new URLSearchParams({ name: file.name }), { method: 'POST', body: file });
+        toast('Profile photo replaced' + (r.webp ? '' : ' (no WebP version; install cwebp for one)'));
+      } else if (kind === 'file') {
+        const target = getPath(content, path);
+        await api('/api/file?' + new URLSearchParams({ path: target }), { method: 'POST', body: file });
+        toast('File replaced: ' + target);
+      } else {
+        const r = await uploadFile(file, box.dataset.folder);
+        setPath(path, r.path);
+        toast(`Uploaded ${r.path} (${Math.round(r.size / 1024)} KB)`);
+      }
+      markAssetChange();
+      renderEditor();
+    } catch (e) { setStatus('Upload failed: ' + e.message, 'err'); }
+  }
+  box.querySelector('[data-upload]').onclick = async () => handle(await pickFiles(kind === 'file' ? '.pdf' : 'image/*', false));
+  box.querySelector('[data-pick]')?.addEventListener('click', async () => {
+    const r = await api('/api/files?folder=' + encodeURIComponent(box.dataset.folder));
+    openModal(`<h3>Choose an existing image</h3><p>${esc(box.dataset.folder)}</p><ul class="files">${r.files.filter(n => /\.(jpe?g|png|webp|gif|svg)$/i.test(n)).map(n => `<li><a href="#" data-file="${esc(n)}">${esc(n)}</a></li>`).join('') || '<li>No images in this folder.</li>'}</ul><div class="actions"><button class="btn" data-close>Cancel</button></div>`);
+    $('#modal').querySelectorAll('[data-file]').forEach(a => a.onclick = e => { e.preventDefault(); setPath(path, box.dataset.folder + '/' + a.dataset.file); closeModal(); renderEditor(); });
+  });
+  const thumb = box.querySelector('.thumb'); if (thumb) dropZone(thumb, handle);
+}
+
+function bindPhotosGrid(box) {
+  const path = box.dataset.path, folder = box.dataset.folder;
+  async function handle(files) {
+    if (!files.length) return;
+    toast(`Uploading ${files.length} photo(s)…`, 60000);
+    try {
+      for (const f of files) { const r = await uploadFile(f, folder); getPath(content, path).push(r.path); }
+      setPath(path, getPath(content, path)); markAssetChange(); toast('Photos added'); renderEditor();
+    } catch (e) { toast('Upload failed: ' + e.message, 5000); }
+  }
+  box.querySelector('[data-upload]').onclick = async () => handle(await pickFiles('image/*', true));
+  dropZone(box, handle);
+  box.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => { const arr = getPath(content, path); arr.splice(+b.dataset.remove, 1); setPath(path, arr); renderEditor(); });
+  box.querySelectorAll('[data-move]').forEach(b => b.onclick = () => { const [i, d] = b.dataset.move.split(':').map(Number); const arr = getPath(content, path); const j = i + d; if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; setPath(path, arr); renderEditor(); });
+}
+
+let assetsChanged = false;
+function markAssetChange() { assetsChanged = true; updateStatusPill(); }
+
+// ── save / preview / publish ─────────────────────────────────────
+async function save(silent) {
+  const clean = stripUi(content);
+  try {
+    const r = await api('/api/content', { method: 'POST', body: JSON.stringify(clean) });
+    savedJson = snapshot(); gitStatus = r.status; assetsChanged = false;
+    updateStatusPill(); renderNav(); reloadPreview();
+    if (!silent) toast('Saved — preview updated');
+    return true;
+  } catch (e) { toast('Save failed: ' + e.message, 5000); return false; }
+}
+
+function reloadPreview() {
+  const frame = $('#frame');
+  try {
+    const inner = frame.contentWindow.location.pathname + frame.contentWindow.location.hash;
+    frame.contentWindow.location.replace(inner.replace(/\?.*$/, '') + '?v=' + Date.now());
+  } catch (e) { frame.src = frame.src; }
+}
+
+function openModal(html) { $('#modal').innerHTML = html; $('#modal-bg').classList.add('open'); $('#modal').querySelectorAll('[data-close]').forEach(b => b.onclick = closeModal); }
+function closeModal() { $('#modal-bg').classList.remove('open'); }
+
+async function publishDialog() {
+  if (isDirty() || assetsChanged) { if (!await save(true)) return; }
+  gitStatus = await api('/api/status');
+  const files = gitStatus.to_publish;
+  if (!files.length && (!gitStatus.unpushed || gitStatus.unpushed === '0')) { toast('Nothing to publish — the site is up to date.'); updateStatusPill(); return; }
+  openModal(`<h3>Publish to GitHub Pages</h3>
+    <p>These files will be committed and pushed to <b>${esc(gitStatus.branch)}</b>. The live site updates about a minute later.</p>
+    <ul class="files">${files.map(f => `<li>${esc(f)}</li>`).join('') || '<li>(no new changes — only pushing earlier commits)</li>'}</ul>
+    <div class="field"><label for="commit-msg">Short description of this update</label><input type="text" id="commit-msg" value="Update site content"></div>
+    <div class="actions"><button class="btn" data-close>Cancel</button><button class="btn primary" id="confirm-publish">Publish</button></div>`);
+  $('#commit-msg').focus(); $('#commit-msg').select();
+  $('#confirm-publish').onclick = async () => {
+    const btn = $('#confirm-publish'); btn.disabled = true; btn.textContent = 'Publishing…';
+    try {
+      const r = await api('/api/publish', { method: 'POST', body: JSON.stringify({ message: $('#commit-msg').value }) });
+      gitStatus = r.status; updateStatusPill(); renderNav();
+      openModal(`<h3>${r.pushed ? '<span class="ok">Published ✓</span>' : '<span class="err">Push failed</span>'}</h3>
+        <p>${r.committed ? 'Committed: ' + esc(r.commit) : 'Nothing new to commit.'}</p>
+        ${r.pushed ? `<p>Your site will be live at <a href="${esc(r.site_url)}" target="_blank">${esc(r.site_url)}</a> in about a minute (hard-refresh if you still see the old version).</p>`
+                   : `<p>The changes are saved locally in git, but pushing to GitHub failed. Fix the issue (usually login) and press Publish again.</p><pre>${esc(r.push_output)}</pre>`}
+        <div class="actions"><button class="btn primary" data-close>Done</button></div>`);
+    } catch (e) { openModal(`<h3 class="err">Publish failed</h3><pre>${esc(e.message)}</pre><div class="actions"><button class="btn" data-close>Close</button></div>`); }
+  };
+}
+
+async function discardDialog() {
+  gitStatus = await api('/api/status');
+  const files = gitStatus.to_publish;
+  if (!isDirty() && !files.length) { toast('Nothing to discard.'); return; }
+  openModal(`<h3>Discard unpublished changes?</h3><p>This restores everything to the last published version. Uploaded images that were never published are deleted.</p>
+    <ul class="files">${files.map(f => `<li>${esc(f)}</li>`).join('') || '<li>(only unsaved edits in this window)</li>'}</ul>
+    <div class="actions"><button class="btn" data-close>Keep my changes</button><button class="btn danger" id="confirm-discard">Discard</button></div>`);
+  $('#confirm-discard').onclick = async () => {
+    try { const r = await api('/api/discard', { method: 'POST' }); gitStatus = r.status; await loadContent(); closeModal(); toast('Changes discarded'); reloadPreview(); }
+    catch (e) { openModal(`<h3 class="err">Discard failed</h3><pre>${esc(e.message)}</pre><div class="actions"><button class="btn" data-close>Close</button></div>`); }
+  };
+}
+
+async function loadContent() {
+  content = await api('/api/content'); savedJson = snapshot(); assetsChanged = false;
+  renderNav(); renderEditor(); updateStatusPill();
+}
+
+// ── init ─────────────────────────────────────────────────────────
+(async function init() {
+  const pages = ['index.html', 'about.html', 'experience.html', 'publications.html', 'projects.html', 'hobbies.html', 'ai-gallery.html', 'tcg-blog.html'];
+  $('#preview-page').innerHTML = pages.map(p => `<option value="${p}">${p}</option>`).join('');
+  $('#preview-page').onchange = e => { $('#frame').src = '/preview/' + e.target.value + '?v=' + Date.now(); };
+  $('#frame').addEventListener('load', () => { try { const p = $('#frame').contentWindow.location.pathname.replace('/preview/', ''); if (pages.includes(p)) $('#preview-page').value = p; } catch (e) {} });
+  $('#btn-reload').onclick = reloadPreview;
+  $('#btn-mobile').onclick = () => { const w = $('#frame-wrap'); w.classList.toggle('mobile'); $('#btn-mobile').textContent = w.classList.contains('mobile') ? 'Desktop view' : 'Mobile view'; };
+  $('#btn-toggle-preview').onclick = () => { const p = $('#preview'); p.classList.toggle('hidden'); $('#editor').classList.toggle('wide'); $('#btn-toggle-preview').textContent = p.classList.contains('hidden') ? 'Show preview' : 'Hide preview'; };
+  $('#btn-save').onclick = () => save();
+  $('#btn-publish').onclick = publishDialog;
+  $('#btn-discard').onclick = discardDialog;
+  $('#modal-bg').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+  document.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); save(); } if (e.key === 'Escape') closeModal(); });
+  window.addEventListener('beforeunload', e => { if (isDirty()) { e.preventDefault(); e.returnValue = ''; } });
+  try { gitStatus = await api('/api/status'); } catch (e) { toast('Git status unavailable: ' + e.message, 6000); }
+  await loadContent();
+})();
+</script>
+</body>
+</html>

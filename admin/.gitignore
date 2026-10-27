@@ -1,0 +1,3 @@
+.pending-uploads.json
+.photo-upload*
+__pycache__/

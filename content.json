@@ -1,0 +1,489 @@
+{
+  "site": {
+    "name": "Nikos Malakasis",
+    "initials": "NM",
+    "author_short": "N. Malakasis",
+    "email": "malakasisnikos@gmail.com",
+    "github": "https://github.com/MalakasisN",
+    "linkedin": "https://www.linkedin.com/in/malakasisnikos/",
+    "scholar": "https://scholar.google.com/citations?user=ApiSHJgAAAAJ&hl=en",
+    "location": "Munich, Germany",
+    "cv_file": "Nikos_Malakasis_CV.pdf",
+    "photo": "me.jpg",
+    "photo_webp": "me.webp",
+    "base_url": "https://malakasisn.github.io/",
+    "copyright_year": 2026
+  },
+  "home": {
+    "meta": {
+      "title": "Nikos Malakasis",
+      "description": "Nikos Malakasis — PhD Candidate in Computational Neuroscience at TU Munich.",
+      "og_title": "Nikos Malakasis — Computational Neuroscientist",
+      "og_description": "PhD candidate building computational models of neural circuits at TU Munich. Research, projects, and CV."
+    },
+    "hero_label": "PhD Candidate · Computational Neuroscience · TU Munich",
+    "hero_name": "Nikos\nMalakasis",
+    "hero_bio": "I build computational models of neural circuits, turn messy data into insight, and\n                tinker with LLMs on the side. Based in Munich, originally from Greece.",
+    "about_text": "PhD candidate at the Computation in Neural Circuits Lab at TU Munich, studying how\n          excitatory and inhibitory plasticity organise synapses along dendrites — and what\n          that means for how neurons learn. Alongside research, I supervise student projects, teach,\n          and contribute to grant writing.",
+    "about_tags": [
+      "Computational Modelling",
+      "Spiking Neural Networks",
+      "Python",
+      "C++",
+      "Machine Learning"
+    ],
+    "projects_intro": "Computational neuroscience projects, from published work to ongoing studies.",
+    "hobby_cards": [
+      {
+        "icon": "image",
+        "title": "AI Art Gallery",
+        "desc": "Generative art explorations over time.",
+        "link": "hobbies.html#ai-art"
+      },
+      {
+        "icon": "book",
+        "title": "AI One Piece Manga",
+        "desc": "An ongoing AI-generated manga project.",
+        "link": "hobbies.html#manga"
+      },
+      {
+        "icon": "layers",
+        "title": "One Piece TCG",
+        "desc": "Decks, collections & card game content.",
+        "link": "hobbies.html#tcg"
+      }
+    ]
+  },
+  "about": {
+    "meta": {
+      "title": "About — Nikos Malakasis",
+      "description": "About Nikos Malakasis — PhD Candidate in Computational Neuroscience.",
+      "og_title": "About — Nikos Malakasis",
+      "og_description": "Computational neuroscientist at TU Munich. Background, skills, and bio."
+    },
+    "hero_label": "About",
+    "title": "Nikos Malakasis",
+    "desc": "Computational neuroscientist, based in Munich.",
+    "bio": "I'm a PhD candidate at the\n            <a href=\"https://www.gjorgjievalab.org/\" target=\"_blank\" rel=\"noopener\">Computation in Neural Circuits Lab</a>\n            at TU Munich, led by Prof. Dr. Julijana Gjorgjieva. I build computational models of how\n            excitatory and inhibitory synaptic plasticity shape the subcellular organisation of synapses\n            on dendrites — the branching structures through which neurons receive and integrate signals —\n            and what that organisation means for learning.\n\nBeyond research, I supervise master's and bachelor's theses, teach classes, and contribute to\n            grant writing. I hold an MSc in Bioinformatics from the University of Crete (9.4/10) and a BSc\n            in Biology from the National and Kapodistrian University of Athens. Originally from Greece,\n            I've lived and studied across Europe. Athens, Crete, Braga, and now Munich.\n\nOutside of work, I'm into video games, generative AI art, graphics design, video editing,\n            martial arts, yoga, snowboarding, strategic board games, trading card games, and anime.",
+    "skills": [
+      {
+        "label": "Technical",
+        "tags": [
+          "Python",
+          "C++",
+          "Computational Modelling",
+          "Data Analysis",
+          "Data Visualisation",
+          "Machine Learning",
+          "Deep Learning",
+          "LLMs / Generative AI"
+        ]
+      },
+      {
+        "label": "Research",
+        "tags": [
+          "Spiking Neural Networks",
+          "Synaptic Plasticity",
+          "Dendritic Computation",
+          "Scientific Writing",
+          "Student Supervision"
+        ]
+      },
+      {
+        "label": "Laboratory",
+        "tags": [
+          "Molecular Biology",
+          "Confocal Microscopy",
+          "Bacterial Cloning",
+          "<em>C. elegans</em> Handling"
+        ]
+      }
+    ]
+  },
+  "experience": {
+    "meta": {
+      "title": "Experience — Nikos Malakasis",
+      "description": "Experience and education of Nikos Malakasis.",
+      "og_title": "Experience — Nikos Malakasis",
+      "og_description": "Research positions, degrees, and training in computational neuroscience."
+    },
+    "hero_label": "Experience & Education",
+    "title": "Career & Training",
+    "desc": "Research positions, degrees, and notable courses.",
+    "research": [
+      {
+        "role": "Doctoral Candidate",
+        "org": "Computation in Neural Circuits Lab · TU Munich",
+        "org_short": "",
+        "date": "Oct 2022 – Present",
+        "bullets": [
+          "Develop spiking and biophysical models of how inhibitory plasticity shapes where synapses sit on dendrites.",
+          "Supervised four master's students and one bachelor's student on research projects.",
+          "Presented at Bernstein 2023, Cosyne 2024, Dendrites 2024 & 2026, and the Inhibition in the CNS Gordon Research Conference 2025.",
+          "Teach classes and assist with grant writing."
+        ],
+        "featured": true
+      },
+      {
+        "role": "Research Assistant & Master's Student",
+        "org": "Dendrites Lab · FORTH, Crete",
+        "org_short": "",
+        "date": "Jul 2020 – Sep 2022",
+        "bullets": [
+          "Built a bio-realistic Spiking Neural Network in C++ to study how structural plasticity affects image classification."
+        ],
+        "featured": true
+      },
+      {
+        "role": "Scientific Intern",
+        "org": "Dendrites Lab · FORTH, Crete",
+        "org_short": "",
+        "date": "Jul 2020 – Aug 2020",
+        "bullets": [
+          "Worked on designing simplified interneuron models with active dendrites using Brian2."
+        ],
+        "featured": false
+      },
+      {
+        "role": "Bachelor's Student",
+        "org": "Molecular Genetics of Aging Lab · Academy of Athens (BRFAA)",
+        "org_short": "Molecular Genetics of Aging Lab · BRFAA Athens",
+        "date": "Jul 2018 – Jul 2019",
+        "bullets": [
+          "Investigated interactions between the p38 MAPK pathway and the mRNA decapping complex in <em>C. elegans</em>."
+        ],
+        "featured": true
+      }
+    ],
+    "education": [
+      {
+        "degree": "Ph.D., Computational Neuroscience",
+        "institution": "Technical University of Munich",
+        "year": "Ongoing · Munich, Germany",
+        "grade": ""
+      },
+      {
+        "degree": "MSc, Bioinformatics",
+        "institution": "University of Crete",
+        "year": "Dec 2021 · Crete, Greece",
+        "grade": "9.4 / 10 — Excellent"
+      },
+      {
+        "degree": "BSc, Biology",
+        "institution": "National & Kapodistrian University of Athens",
+        "year": "Sep 2019 · Athens, Greece",
+        "grade": "7.25 / 10 — Very Good"
+      }
+    ],
+    "courses": [
+      {
+        "name": "OIST Computational Neuroscience Course",
+        "org": "Okinawa Institute of Science and Technology",
+        "date": "2024",
+        "bullets": [
+          "Self-proposed project on the mechanistic connectivity of the visual thalamocortical microcircuit that facilitates surprise."
+        ]
+      },
+      {
+        "name": "Neuromatch Academy — Deep Learning Summer Course",
+        "org": "Neuromatch Academy",
+        "date": "2022",
+        "bullets": [
+          "Team project using reinforcement learning agents trained on human fMRI data to mimic human performance on a behavioural task."
+        ]
+      }
+    ]
+  },
+  "publications": {
+    "meta": {
+      "title": "Publications — Nikos Malakasis",
+      "description": "Publications and conference presentations by Nikos Malakasis.",
+      "og_title": "Publications — Nikos Malakasis",
+      "og_description": "Peer-reviewed papers and conference presentations."
+    },
+    "hero_label": "Publications & Talks",
+    "title": "Research Output",
+    "desc": "Peer-reviewed papers and conference presentations.",
+    "papers": [
+      {
+        "title": "Visual experience exerts an instructive role on cortical feedback inputs to the primary visual cortex",
+        "authors": "R. Rajan, R. F. Dias, N. Malakasis, M. Baeta, X. Zhang, J. Gjorgjieva, L. Petreanu",
+        "venue": "Current Biology, 2026",
+        "venue_short": "",
+        "doi": "10.1016/j.cub.2026.01.031",
+        "featured": true
+      },
+      {
+        "title": "Synaptic density and relative connectivity conservation maintain circuit stability across development",
+        "authors": "I. Fritz, F. Wang, R. Chirif, N. Malakasis, J. Gjorgjieva, A. Ferreira Castro",
+        "venue": "eLife, 2025",
+        "venue_short": "",
+        "doi": "10.7554/eLife.108643.1",
+        "featured": true
+      },
+      {
+        "title": "Synaptic turnover promotes efficient learning in bio-realistic spiking neural networks",
+        "authors": "N. Malakasis, S. Chavlis, P. Poirazi",
+        "venue": "IEEE Asilomar Conference on Signals, Systems, and Computers, 2023",
+        "venue_short": "IEEE Asilomar, 2023",
+        "doi": "10.1109/IEEECONF59524.2023.10476829",
+        "featured": true
+      }
+    ],
+    "talks": [
+      {
+        "title": "The Structural Role of Inhibition in Shaping Synaptic Arrangement",
+        "year": "2026",
+        "venue": "Dendrites 2026 · Poster"
+      },
+      {
+        "title": "A mechanistic model of sensory and feedback signal integration via dendritic computation",
+        "year": "2026",
+        "venue": "Dendrites 2026 · Poster"
+      },
+      {
+        "title": "The Functional and Structural Role of Inhibition in Dendritic Synaptic Arrangement",
+        "year": "2025",
+        "venue": "Inhibition in the CNS Gordon Research Seminar & Conference · Poster"
+      },
+      {
+        "title": "The Role of Inhibition in Shaping Dendritic Synaptic Arrangement",
+        "year": "2024",
+        "venue": "Cosyne 2024 · Poster &nbsp;|&nbsp; Dendrites 2024 · Poster & Flash Talk"
+      },
+      {
+        "title": "The Role of Inhibition in Shaping Dendritic Synaptic Arrangement",
+        "year": "2023",
+        "venue": "Bernstein Conference 2023 · Poster"
+      },
+      {
+        "title": "Key Biological Features that help a Spiking Neural Network perform Image Discrimination",
+        "year": "2022",
+        "venue": "Dendrites 2022 · Poster"
+      },
+      {
+        "title": "Biologically Constrained Spiking Neural Network for Image Classification",
+        "year": "2022",
+        "venue": "AREADNE 2022 · Poster &nbsp;|&nbsp; Neuromatch 4.0 · Flash Talk"
+      }
+    ]
+  },
+  "projects": {
+    "meta": {
+      "title": "Projects — Nikos Malakasis",
+      "description": "Projects by Nikos Malakasis.",
+      "og_title": "Projects — Nikos Malakasis",
+      "og_description": "Computational neuroscience research projects."
+    },
+    "hero_label": "Projects",
+    "title": "Research Projects",
+    "desc": "Computational neuroscience projects I've contributed to.",
+    "items": [
+      {
+        "label": "Malakasis et al. 2023",
+        "title": "Synaptic turnover promotes efficient learning in bio-realistic spiking neural networks",
+        "desc": "How synaptic turnover and active dendrites lead to the formation of better image representations.",
+        "tags": [
+          "C++",
+          "Spiking Neural Networks",
+          "Image Classification"
+        ],
+        "image": "Projects/Project_Summary_Images/g264.png",
+        "image_alt": "Malakasis et al. 2023",
+        "link": "https://ieeexplore.ieee.org/document/10476829",
+        "status_text": "",
+        "featured": false
+      },
+      {
+        "label": "Fritz et al. 2025",
+        "title": "Synaptic density and relative connectivity conservation maintain circuit stability across development",
+        "desc": "Comparative connectomics over Drosophila larvae development.",
+        "tags": [
+          "Python",
+          "Connectomics",
+          "Data Analysis"
+        ],
+        "image": "Projects/Project_Summary_Images/path37.png",
+        "image_alt": "Fritz et al. 2025",
+        "link": "https://elifesciences.org/reviewed-preprints/108643v1",
+        "status_text": "",
+        "featured": false
+      },
+      {
+        "label": "Rajan et al. 2026",
+        "title": "Visual experience exerts an instructive role on cortical feedback inputs to the primary visual cortex",
+        "desc": "Built the model showing how opposing plasticity in feedforward and feedback pathways explains feedback remodeling.",
+        "tags": [
+          "Python",
+          "Computational Modelling",
+          "Synaptic Plasticity"
+        ],
+        "image": "Projects/Project_Summary_Images/path84.png",
+        "image_alt": "Rajan et al. 2026",
+        "link": "https://www.cell.com/current-biology/abstract/S0960-9822(26)00070-9",
+        "status_text": "",
+        "featured": false
+      },
+      {
+        "label": "In preparation",
+        "title": "Circuit modeling of surprise amplification in the visual cortex",
+        "desc": "",
+        "tags": [
+          "Python",
+          "Circuit Modelling"
+        ],
+        "image": "Projects/Project_Summary_Images/path240.png",
+        "image_alt": "Circuit modeling of surprise amplification",
+        "link": "",
+        "status_text": "In progress",
+        "featured": true
+      },
+      {
+        "label": "In preparation",
+        "title": "A systematic analysis of meta-learned synaptic plasticity rules",
+        "desc": "",
+        "tags": [
+          "Python",
+          "Meta-Learning",
+          "Machine Learning"
+        ],
+        "image": "Projects/Project_Summary_Images/path65.png",
+        "image_alt": "Meta-learned synaptic plasticity rules",
+        "link": "",
+        "status_text": "In progress",
+        "featured": true
+      },
+      {
+        "label": "In preparation",
+        "title": "The role of inhibition in shaping dendritic synaptic arrangement",
+        "desc": "",
+        "tags": [
+          "Python",
+          "Computational Modelling",
+          "Dendrites"
+        ],
+        "image": "Projects/Project_Summary_Images/g263.png",
+        "image_alt": "Inhibition and dendritic synaptic arrangement",
+        "link": "",
+        "status_text": "In progress",
+        "featured": true
+      },
+      {
+        "label": "In preparation",
+        "title": "Subcellular organisation analysis of excitatory and inhibitory synapses in MICrONS",
+        "desc": "",
+        "tags": [
+          "Python",
+          "Connectomics",
+          "Data Analysis"
+        ],
+        "image": "Projects/Project_Summary_Images/path98.png",
+        "image_alt": "MICrONS synaptic organisation",
+        "link": "",
+        "status_text": "In progress",
+        "featured": false
+      }
+    ]
+  },
+  "hobbies": {
+    "meta": {
+      "title": "Hobbies — Nikos Malakasis",
+      "description": "Hobbies of Nikos Malakasis — AI art, manga, and One Piece TCG.",
+      "og_title": "Hobbies — Nikos Malakasis",
+      "og_description": "AI art, an AI-generated manga, and One Piece TCG."
+    },
+    "hero_label": "Hobbies",
+    "title": "Outside the Lab",
+    "desc": "Art, stories, and cards.",
+    "ai_art": {
+      "heading": "AI Art Gallery",
+      "intro": "Generative art I've created over time using various AI tools.",
+      "stack_image": "Hobbies/AI Art Gallery/Reflexion.jpg",
+      "items": [
+        {
+          "title": "Determination",
+          "image": "Hobbies/AI Art Gallery/Determination_web.jpg"
+        },
+        {
+          "title": "Reflexion",
+          "image": "Hobbies/AI Art Gallery/Reflexion.jpg"
+        },
+        {
+          "title": "Dementia",
+          "image": "Hobbies/AI Art Gallery/Dementia.jpg"
+        },
+        {
+          "title": "Oni Family",
+          "image": "Hobbies/AI Art Gallery/Oni Family.jpg"
+        },
+        {
+          "title": "Freedom",
+          "image": "Hobbies/AI Art Gallery/Freedom.jpeg"
+        },
+        {
+          "title": "Alien",
+          "image": "Hobbies/AI Art Gallery/Alien.jpg"
+        },
+        {
+          "title": "Gommage",
+          "image": "Hobbies/AI Art Gallery/Gommage.jpeg"
+        }
+      ]
+    },
+    "manga": {
+      "heading": "AI One Piece Manga",
+      "intro": "I created this One Piece inspired manga during the set-up of a One Piece inspired DnD campaign, to serve as the backstory of my character, Nero.",
+      "disclaimer": "THE CHARACTERS, SETTINGS, AND PLOT ELEMENTS OF ONE PIECE APPEARING IN THIS WORK ARE THE INTELLECTUAL PROPERTY OF EIICHIRO ODA, PUBLISHED BY SHUEISHA AND ANIMATED BY TOEI ANIMATION. THIS IS A NON-COMMERCIAL, FAN-CREATED WORK NOT ENDORSED BY OR AFFILIATED WITH THE OFFICIAL FRANCHISE.",
+      "chapters": [
+        {
+          "label": "Chapter 1",
+          "cover": "Hobbies/AI One Piece Inspired Manga/cover_chapter_1_web.jpg",
+          "link": "https://drive.google.com/file/d/1kdgDHk12f5sX9QkArd526nik4joepENQ/view?usp=sharing"
+        },
+        {
+          "label": "Chapter 2",
+          "cover": "Hobbies/AI One Piece Inspired Manga/cover_chapter_2_web.jpg",
+          "link": "https://drive.google.com/file/d/1mgectIGvBROutH4OCLcgmLGz4MY5IJLY/view?usp=sharing"
+        }
+      ]
+    },
+    "tcg": {
+      "heading": "One Piece TCG",
+      "intro": "Trips, tournaments, and card game updates.",
+      "preview_count": 3,
+      "posts": [
+        {
+          "date": "2026-05-06",
+          "title": "Warsaw Regionals Report",
+          "body": "This past weekend I went to my first regional of the 2026-2027 One Piece TCG championship season. The deck I chose was Purple Enel (decklist attached). Had a great time catching up with new and old friends, but unfortunately, didn't perform well. On to the next one!",
+          "photos": [
+            "Hobbies/One Piece TCG/Warsaw/Warsaw.jpeg",
+            "Hobbies/One Piece TCG/Warsaw/Decklist.jpg"
+          ]
+        }
+      ]
+    }
+  },
+  "ai_gallery": {
+    "meta": {
+      "title": "AI Art Gallery — Nikos Malakasis",
+      "description": "AI Art Gallery — generative art by Nikos Malakasis.",
+      "og_title": "AI Art Gallery — Nikos Malakasis",
+      "og_description": "Generative art created over time using various AI tools."
+    },
+    "hero_label": "AI Art",
+    "title": "AI Art Gallery",
+    "desc": "Generative art I've created over time using various AI tools."
+  },
+  "tcg_blog": {
+    "meta": {
+      "title": "One Piece TCG — Nikos Malakasis",
+      "description": "One Piece TCG blog — trips, tournaments, and card game updates by Nikos Malakasis.",
+      "og_title": "One Piece TCG — Nikos Malakasis",
+      "og_description": "Trips, tournaments, and card game updates."
+    },
+    "hero_label": "One Piece TCG",
+    "title": "TCG Blog",
+    "desc": "Trips, tournaments, and card game updates."
+  }
+}

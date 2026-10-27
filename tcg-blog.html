@@ -85,7 +85,7 @@
   <script>
     (function () {
       var container = document.getElementById('tcg-all');
-      var posts = window.TCG_POSTS || [];
+      var posts = (window.TCG_POSTS || []);
       if (!posts.length) {
         container.innerHTML = '<p class="tcg-empty">No posts yet — check back soon.</p>';
         return;
